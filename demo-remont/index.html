@@ -148,13 +148,6 @@
   }
 
   /* ---------- фото-полоса ---------- */
-  .band{position:relative;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .band img{width:100%;height:clamp(220px,34vw,380px);object-fit:cover}
-  .band figcaption{
-    position:absolute;left:var(--pad);bottom:22px;background:var(--paper);
-    padding:12px 18px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;
-    border-left:3px solid var(--accent)
-  }
 
   /* ---------- таймлайн ---------- */
   .steps{display:grid;grid-template-columns:8fr 4fr;gap:48px;align-items:start}
@@ -333,7 +326,6 @@
     .row2{grid-template-columns:1fr}
     .foot{grid-template-columns:1fr}
     .hero__btns .btn{width:100%}
-    .band figcaption{left:var(--pad);right:var(--pad);bottom:var(--pad)}
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
@@ -453,13 +445,6 @@
   </div>
 </section>
 
-<!-- ======================= ФОТО-ПОЛОСА ======================= -->
-<figure class="band">
-  <!-- ФОТО: горизонтальный кадр для полосы. Можно заменить на «до/после». -->
-  <img src="img/band.jpg" width="1600" height="686" alt="Интерьер квартиры после ремонта" loading="lazy" decoding="async">
-  <figcaption>объект 448 · 3-к, 78 м², Химки · сдан за 70 дней</figcaption>
-</figure>
-
 <!-- ======================= КАК РАБОТАЕМ ======================= -->
 <section class="sec" id="process">
   <div class="wrap">
@@ -536,26 +521,26 @@
       </figure>
 
       <figure class="work w-5 work--tall-2">
-        <img src="img/work-2.jpg" width="1000" height="750" alt="Санузел после ремонта" loading="lazy" decoding="async">
+        <img src="img/work-2.jpg" width="1000" height="750" alt="Гостиная с камином после ремонта" loading="lazy" decoding="async">
         <figcaption>
-          <h3>Санузел в сталинке, Чистые пруды</h3>
-          <div class="meta">4,5 м² · 12 дней · 148 000 ₽</div>
+          <h3>Гостиная с камином, сталинка</h3>
+          <div class="meta">68 м² · 52 дня · 840 000 ₽</div>
         </figcaption>
       </figure>
 
       <figure class="work w-4 work--tall-2">
-        <img src="img/work-3.jpg" width="1000" height="750" alt="Новостройка после ремонта" loading="lazy" decoding="async">
+        <img src="img/work-3.jpg" width="1000" height="750" alt="Косметический ремонт в жилой квартире" loading="lazy" decoding="async">
         <figcaption>
-          <h3>Новостройка, Химки</h3>
-          <div class="meta">78 м² · 70 дней · 740 000 ₽</div>
+          <h3>Косметический, Бутово</h3>
+          <div class="meta">41 м² · 16 дней · 198 000 ₽</div>
         </figcaption>
       </figure>
 
       <figure class="work w-4 work--tall-2">
-        <img src="img/work-4.jpg" width="1000" height="750" alt="Квартира после дизайнерского ремонта" loading="lazy" decoding="async">
+        <img src="img/work-4.jpg" width="1000" height="750" alt="Спальня с деревянной стеной после ремонта" loading="lazy" decoding="async">
         <figcaption>
-          <h3>4-к, Раменки</h3>
-          <div class="meta">94 м² · 96 дней · 1 380 000 ₽</div>
+          <h3>Спальня, Раменки</h3>
+          <div class="meta">74 м² · 62 дня · 690 000 ₽</div>
         </figcaption>
       </figure>
 
@@ -564,14 +549,6 @@
         <span>квартир за 12 лет. Полный список адресов не выкладываем — но если нужен объект
               в вашем ЖК или похожей планировки, попросите, дадим контакт заказчика и адрес.</span>
       </div>
-
-      <figure class="work w-12 work--wide">
-        <img src="img/work-5.jpg" width="1000" height="562" alt="Полностью переделанная электрика в квартире" loading="lazy" decoding="async">
-        <figcaption>
-          <h3>Замена электрики целиком, Кузьминки</h3>
-          <div class="meta">55 м² · 9 дней · 126 000 ₽ · щиток на 24 модуля, 41 точка</div>
-        </figcaption>
-      </figure>
     </div>
   </div>
 </section>
