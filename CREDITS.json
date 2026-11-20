@@ -1,0 +1,23 @@
+{
+  "demo-barber/img/hall-01.jpg": {
+    "source": "hall-01.jpg",
+    "niche": "barber",
+    "title": "Dom's Barber Shop",
+    "license": "by",
+    "page": "https://www.flickr.com/photos/43547797@N00/3646053016"
+  },
+  "demo-barber/img/hands-01.jpg": {
+    "source": "hands-04.jpg",
+    "niche": "barber",
+    "title": "42-15443880",
+    "license": "by",
+    "page": "https://www.flickr.com/photos/42882844@N06/6230821887"
+  },
+  "demo-clinic/photos/02-kabinet.jpg": {
+    "source": "cabinet-04.jpg",
+    "niche": "clinic",
+    "title": "Well Baby Clinic, Red Cross",
+    "license": "cc0",
+    "page": "https://www.rawpixel.com/image/8764778/photo-image-abstract-person-black"
+  }
+}

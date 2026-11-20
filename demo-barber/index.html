@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Топор — барбершоп на Большой Дмитровке. Стрижка 2 200 ₽, борода 1 300 ₽</title>
+<meta name="description" content="Барбершоп «Топор»: 4 мастера, 5 кресел, 12:00–22:00 без выходных. Мужская стрижка 2 200 ₽, борода 1 300 ₽, королевское бритьё опасной бритвой 2 700 ₽. Прайс висит у входа и не менялся с ноября 2024 года.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Топор — здесь не стригут «покороче»">
+<meta property="og:description" content="4 мастера, 5 кресел, 12:00–22:00 без выходных. Прайс без «от» и звёздочек. Бесплатная коррекция контура через 10 дней.">
+<!-- ЗАМЕНИТЬ (SEO): на домене добавить og:url, og:image и canonical.
+     Фавикон отдельным файлом favicon.svg рядом с index.html: data-URI потребовал бы
+     xmlns со схемой в атрибуте, а в этом макете внешних и «схемных» строк нет. -->
+<style>
+/* ==========================================================================
+   ТОПОР / барбершоп на Дмитровке
+   Один файл: разметка + CSS + JS. Ноль внешних запросов.
+   Art direction: наборная печатная вёрстка, а не SaaS-лендинг.
+     - заголовки: сжатый гротеск (Bahnschrift / Arial Narrow / Impact)
+     - цены, номера, подписи, UI: моноширинный (Consolas / Courier New)
+     - проза: Georgia
+     - радиусы почти нулевые, тени не используются, всё держится на волосяных линиях
+   ========================================================================== */
+
+:root{
+  /* Цвет: чернила + латунь */
+  --bg:#0b0b0d;
+  --bg-2:#111114;
+  --ink:#17171b;
+  --ink-2:#1c1c21;
+  --line:#2b2b32;
+  --line-2:#1f1f24;
+  --text:#efece6;
+  --dim:#a6a29b;
+  --mute:#726e68;
+  --accent:#d4a24c;
+  --accent-2:#e0b25f;
+  --accent-dim:rgba(212,162,76,.13);
+  --danger:#e0574a;
+
+  /* Радиусы: печатная вёрстка — почти прямые углы */
+  --r-sm:2px;
+  --r-md:2px;
+  --r-lg:3px;
+
+  /* Тени: только один функциональный, для всплывающего меню */
+  --shadow-md:0 18px 40px rgba(0,0,0,.55);
+  --shadow-sm:0 6px 18px rgba(0,0,0,.35);
+
+  --container:1180px;
+  --gutter:22px;
+  --header-h:68px;
+
+  --f-disp:"Bahnschrift","Bahnschrift SemiCondensed","Arial Narrow",Impact,Haettenschweiler,"Franklin Gothic Medium","Segoe UI",sans-serif;
+  --f-mono:Consolas,"Courier New",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --f-text:Georgia,"Iowan Old Style","Times New Roman",serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--header-h) + 14px)}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--f-text);
+  font-size:16.5px;
+  line-height:1.62;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Бумажная зернистость: два слоя штриховки, без картинок */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    repeating-linear-gradient(135deg,rgba(255,255,255,.014) 0 1px,transparent 1px 8px),
+    radial-gradient(760px 480px at 88% -8%,rgba(212,162,76,.07),transparent 64%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;
+  background-image:repeating-conic-gradient(from 12deg at 8% 30%,rgba(255,255,255,.018) 0deg 2deg,transparent 2deg 5deg);
+}
+
+main,header,footer{position:relative;z-index:1}
+
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+p{margin:0}
+ul,ol,dl{margin:0;padding:0;list-style:none}
+figure{margin:0}
+
+h1,h2,h3,h4{
+  margin:0;
+  font-family:var(--f-disp);
+  font-stretch:condensed;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:-.025em;
+  line-height:.93;
+}
+
+.container{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:var(--gutter)}
+
+.skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--accent);color:#1a1405;
+  font-family:var(--f-mono);font-size:13px;font-weight:700;padding:12px 18px}
+.skip:focus{left:0}
+
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--accent-2);outline-offset:3px}
+
+/* ---------- Служебные элементы набора ---------- */
+.kicker{
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);display:flex;align-items:center;gap:12px;
+}
+.kicker::after{content:"";flex:1;height:1px;background:var(--line);min-width:24px}
+
+.note{font-size:15.5px;color:var(--dim);max-width:46ch}
+
+.mono{font-family:var(--f-mono)}
+
+/* ---------- Кнопки: прямоугольные, «вывеска» ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:46px;min-width:46px;padding:14px 22px;
+  border:1px solid transparent;border-radius:var(--r-sm);
+  font-family:var(--f-mono);font-size:12.5px;font-weight:700;
+  letter-spacing:.13em;text-transform:uppercase;white-space:nowrap;cursor:pointer;
+  transition:background-color .18s ease,border-color .18s ease,color .18s ease,transform .18s ease;
+}
+.btn svg{width:16px;height:16px;flex:none}
+.btn--primary{background:var(--accent);color:#181203;border-color:var(--accent)}
+.btn--primary:hover{background:var(--accent-2);border-color:var(--accent-2);transform:translateY(-1px)}
+.btn--ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn--ghost:hover{border-color:var(--accent);color:var(--accent-2)}
+.btn--block{width:100%}
+
+/* ==========================================================================
+   ШАПКА
+   ========================================================================== */
+.header{
+  position:sticky;top:0;z-index:100;height:var(--header-h);
+  display:flex;align-items:center;
+  background:rgba(11,11,13,.9);
+  backdrop-filter:blur(12px) saturate(130%);
+  -webkit-backdrop-filter:blur(12px) saturate(130%);
+  border-bottom:1px solid var(--line);
+}
+.header__inner{
+  display:flex;align-items:center;gap:26px;width:100%;
+  max-width:var(--container);margin-inline:auto;padding-inline:var(--gutter);
+}
+
+.logo{
+  display:flex;align-items:baseline;gap:10px;flex:none;
+  font-family:var(--f-disp);font-stretch:condensed;font-weight:800;
+  font-size:25px;letter-spacing:.04em;text-transform:uppercase;line-height:1;
+}
+.logo__mark{width:22px;height:22px;flex:none;color:var(--accent);align-self:center;transition:transform .3s ease}
+.logo:hover .logo__mark{transform:rotate(-14deg)}
+.logo__est{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;color:var(--mute);
+  text-transform:none;font-weight:400;
+}
+
+.nav{margin-left:auto}
+.nav__list{display:flex;align-items:center;gap:2px}
+.nav__link{
+  display:block;padding:11px 12px;
+  font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--dim);transition:color .18s ease;
+}
+.nav__link:hover{color:var(--accent-2)}
+
+.header__actions{display:flex;align-items:center;gap:16px;flex:none}
+.header__phone{
+  font-family:var(--f-mono);font-size:14px;font-weight:700;letter-spacing:.02em;
+  display:inline-flex;align-items:center;gap:8px;transition:color .18s ease;
+}
+.header__phone:hover{color:var(--accent-2)}
+.header__phone svg{width:15px;height:15px;color:var(--accent)}
+.header .btn{min-height:42px;padding:12px 18px;font-size:11.5px}
+
+.burger{
+  display:none;width:46px;height:44px;flex:none;align-items:center;justify-content:center;
+  background:transparent;border:1px solid var(--line);border-radius:var(--r-sm);cursor:pointer;
+}
+.burger:hover{border-color:var(--accent)}
+.burger__box{position:relative;width:20px;height:12px;display:block}
+.burger__box span{position:absolute;left:0;width:100%;height:2px;background:var(--text);
+  transition:transform .26s ease,opacity .2s ease,top .26s ease}
+.burger__box span:nth-child(1){top:0}
+.burger__box span:nth-child(2){top:5px}
+.burger__box span:nth-child(3){top:10px}
+.burger[aria-expanded="true"] .burger__box span:nth-child(1){top:5px;transform:rotate(45deg)}
+.burger[aria-expanded="true"] .burger__box span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] .burger__box span:nth-child(3){top:5px;transform:rotate(-45deg)}
+
+/* ==========================================================================
+   ФОТО-КОНТЕЙНЕРЫ (осознанный приём: кропмарки, номер, подпись)
+   ФОТО: вставлять <img src="img/xxx.jpg" alt="..."> внутрь .ph__body первым
+   элементом — правило .ph img уже растягивает картинку с object-fit:cover.
+   ========================================================================== */
+.ph{
+  position:relative;margin:0;border:1px solid var(--line);overflow:hidden;
+  background:
+    repeating-linear-gradient(135deg,rgba(255,255,255,.022) 0 2px,transparent 2px 9px),
+    linear-gradient(162deg,#1b1b20,#0e0e11);
+}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* затемнение под текстом, если в слот вставлено фото */
+.ph img ~ .ph__body{
+  background:linear-gradient(180deg,rgba(9,9,11,.82) 0%,rgba(9,9,11,.10) 38%,rgba(9,9,11,.92) 100%)
+}
+.ph__marks{
+  position:absolute;inset:11px;pointer-events:none;
+  background:
+    linear-gradient(var(--accent),var(--accent)) 0 0/16px 2px no-repeat,
+    linear-gradient(var(--accent),var(--accent)) 0 0/2px 16px no-repeat,
+    linear-gradient(var(--accent),var(--accent)) 100% 0/16px 2px no-repeat,
+    linear-gradient(var(--accent),var(--accent)) 100% 0/2px 16px no-repeat,
+    linear-gradient(var(--accent),var(--accent)) 0 100%/16px 2px no-repeat,
+    linear-gradient(var(--accent),var(--accent)) 0 100%/2px 16px no-repeat,
+    linear-gradient(var(--accent),var(--accent)) 100% 100%/16px 2px no-repeat,
+    linear-gradient(var(--accent),var(--accent)) 100% 100%/2px 16px no-repeat;
+}
+.ph__body{
+  position:absolute;inset:0;padding:26px;
+  display:flex;flex-direction:column;justify-content:space-between;gap:16px;
+}
+.ph__num{font-family:var(--f-mono);font-size:clamp(32px,4.6vw,54px);line-height:1;
+  letter-spacing:-.04em;color:var(--accent)}
+.ph__cap{
+  font-family:var(--f-mono);font-size:11px;line-height:1.5;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dim);max-width:26ch;
+}
+.ph--hero{aspect-ratio:3/4}
+.ph--process{aspect-ratio:4/5;position:sticky;top:calc(var(--header-h) + 26px)}
+.ph--narrow{aspect-ratio:5/2}
+
+/* ==========================================================================
+   ПЕРВЫЙ ЭКРАН
+   ========================================================================== */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero__bleed{
+  position:absolute;right:-.04em;bottom:-.22em;z-index:0;pointer-events:none;user-select:none;
+  font-family:var(--f-disp);font-stretch:condensed;font-weight:800;
+  font-size:clamp(110px,20vw,260px);line-height:.82;letter-spacing:-.06em;
+  color:transparent;-webkit-text-stroke:1px rgba(212,162,76,.20);
+}
+.hero__grid{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:minmax(0,1.62fr) minmax(0,.78fr);
+  gap:clamp(28px,5vw,72px);align-items:start;
+  padding-block:clamp(46px,7vw,86px) clamp(56px,8vw,104px);
+}
+.hero h1{
+  font-size:clamp(44px,9.6vw,116px);
+  margin:26px 0 30px;
+  letter-spacing:-.035em;
+}
+.hero h1 .q{
+  color:transparent;-webkit-text-stroke:1.5px var(--accent);
+  text-shadow:none;
+}
+.hero__lead{font-size:clamp(16.5px,1.9vw,19.5px);color:var(--dim);max-width:54ch}
+.hero__lead + .hero__lead{margin-top:14px}
+.hero__lead b{color:var(--text);font-weight:400;border-bottom:1px solid var(--accent);padding-bottom:1px}
+
+.hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin:34px 0 0}
+
+.facts{
+  margin-top:44px;padding-top:22px;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr;gap:24px;
+}
+.facts dt{font-family:var(--f-mono);font-size:clamp(19px,2.4vw,27px);color:var(--text);
+  letter-spacing:-.02em;line-height:1.1}
+.facts dd{margin:8px 0 0;font-size:14.5px;color:var(--mute);line-height:1.45}
+.facts > div:first-child dt{font-size:clamp(24px,3.4vw,38px);color:var(--accent)}
+
+.hero__side{display:flex;gap:16px;align-items:stretch;justify-content:flex-end;padding-top:8px}
+.vert{
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.36em;text-transform:uppercase;
+  color:var(--mute);align-self:flex-start;white-space:nowrap;
+}
+.hero__side .ph{flex:1;max-width:280px}
+
+/* ==========================================================================
+   СЕКЦИИ: ритм нарочно неровный
+   ========================================================================== */
+.sec{padding-block:96px}
+.sec--tight{padding-block:64px}
+.sec--loose{padding-block:124px}
+.sec--paper{background:var(--bg-2)}
+.sec + .sec{border-top:1px solid var(--line-2)}
+
+.sec__head{
+  display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.9fr);
+  gap:clamp(24px,4vw,64px);align-items:end;margin-bottom:52px;
+}
+.sec__head h2{font-size:clamp(30px,5.4vw,64px);margin-top:18px}
+.sec__head h2 small{
+  display:block;font-size:.42em;color:var(--dim);letter-spacing:0;
+  text-transform:none;font-family:var(--f-text);font-weight:400;line-height:1.35;margin-top:14px;
+  max-width:34ch;
+}
+
+/* ==========================================================================
+   ПРАЙС-ЛИСТ (как на стене): пунктир и цена справа
+   ========================================================================== */
+.wall{border-top:1px solid var(--line)}
+.row{
+  display:grid;grid-template-columns:56px minmax(0,1fr) 96px;
+  grid-template-areas:"no lead time" ". note time";
+  column-gap:18px;row-gap:9px;align-items:baseline;
+  padding:20px 0;border-bottom:1px solid var(--line-2);
+  transition:background-color .2s ease;
+}
+.row:hover{background:linear-gradient(90deg,var(--accent-dim),transparent 62%)}
+.row__no{grid-area:no;font-family:var(--f-mono);font-size:12px;color:var(--mute);letter-spacing:.08em}
+.row__lead{grid-area:lead;display:flex;align-items:baseline;gap:12px;min-width:0}
+.row__name{
+  font-family:var(--f-disp);font-stretch:condensed;font-weight:800;text-transform:uppercase;
+  font-size:clamp(19px,2.6vw,29px);letter-spacing:-.015em;line-height:1.02;
+}
+.row__dots{flex:1;min-width:16px;border-bottom:1px dotted #3d3d46;transform:translateY(-5px)}
+.row__price{font-family:var(--f-mono);font-size:clamp(17px,2.1vw,22px);color:var(--accent);white-space:nowrap}
+.row__note{grid-area:note;font-size:15px;color:var(--dim);max-width:62ch}
+.row__time{grid-area:time;font-family:var(--f-mono);font-size:12px;color:var(--mute);text-align:right;white-space:nowrap}
+.row--lead .row__name{font-size:clamp(22px,3.1vw,36px)}
+.row--lead .row__name::after{
+  content:" ← берут чаще всего";font-family:var(--f-mono);font-size:11px;
+  letter-spacing:.08em;color:var(--accent);vertical-align:middle;
+}
+.wall__foot{
+  display:flex;flex-wrap:wrap;gap:14px 34px;align-items:baseline;
+  margin-top:26px;font-family:var(--f-mono);font-size:12.5px;color:var(--mute);
+  letter-spacing:.03em;text-transform:uppercase;
+}
+.wall__foot b{color:var(--dim);font-weight:400}
+
+/* ==========================================================================
+   МАСТЕРА: по одному в ряд, чётные сдвинуты вправо
+   ========================================================================== */
+.crew{display:flex;flex-direction:column}
+.master{
+  display:grid;grid-template-columns:82px minmax(0,1fr) minmax(0,1.5fr) 186px;
+  grid-template-areas:"no id text facts";
+  gap:28px;align-items:start;padding:34px 0;position:relative;
+  border-top:1px solid var(--line);
+}
+.master:last-child{border-bottom:1px solid var(--line)}
+.master:nth-child(even){padding-left:clamp(0px,5vw,72px)}
+.master__no{
+  grid-area:no;font-family:var(--f-mono);font-size:clamp(30px,4.4vw,50px);
+  line-height:1;letter-spacing:-.05em;color:var(--accent);
+}
+.master__id{grid-area:id}
+.master__name{font-size:clamp(22px,3.4vw,40px);line-height:1}
+.master__spec{
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--dim);margin-top:10px;
+}
+.master__text{grid-area:text;font-size:16px;color:var(--dim);max-width:58ch}
+.master__text b{color:var(--text);font-weight:400}
+.master__facts{
+  grid-area:facts;font-family:var(--f-mono);font-size:12px;color:var(--mute);
+  border-left:1px solid var(--line);padding-left:18px;line-height:1.7;
+}
+.master__facts span{display:block}
+.master__facts b{color:var(--dim);font-weight:400}
+
+/* ==========================================================================
+   КАК СТРИЖЁМ
+   ========================================================================== */
+.process{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,.8fr);gap:clamp(28px,5vw,64px);align-items:start}
+.steps{border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:60px minmax(0,1fr);gap:22px;
+  padding:26px 0;border-bottom:1px solid var(--line-2)}
+.step__no{font-family:var(--f-mono);font-size:12.5px;color:var(--accent);letter-spacing:.1em;padding-top:6px}
+.step h3{font-size:clamp(18px,2.3vw,26px);margin-bottom:9px}
+.step p{font-size:15.5px;color:var(--dim);max-width:62ch}
+.step p + p{margin-top:8px}
+
+/* ==========================================================================
+   ОТЗЫВЫ: асимметрия + цифра, вылезающая за контейнер
+   ========================================================================== */
+.reviews{position:relative;overflow:hidden}
+.reviews__bleed{
+  position:absolute;right:-.05em;top:-.24em;z-index:0;pointer-events:none;user-select:none;
+  font-family:var(--f-disp);font-stretch:condensed;font-weight:800;
+  font-size:clamp(120px,25vw,340px);line-height:.8;letter-spacing:-.07em;
+  color:transparent;-webkit-text-stroke:1px rgba(212,162,76,.22);
+}
+.reviews__inner{position:relative;z-index:1}
+.reviews__grid{
+  display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);
+  gap:0 34px;align-items:start;
+}
+.review{border-top:2px solid var(--line);padding:24px 0 30px}
+.review--wide{grid-column:1 / -1;border-top-color:var(--accent)}
+.review__top{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:baseline;justify-content:space-between}
+.review__stars{display:flex;gap:3px;color:var(--accent);flex:none}
+.review__stars svg{width:14px;height:14px}
+.review__stars svg.is-off{color:var(--line)}
+.review__who{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.review__meta{font-family:var(--f-mono);font-size:11.5px;color:var(--mute)}
+.review__text{font-size:15.8px;color:var(--dim);margin-top:14px;max-width:66ch}
+.review--wide .review__text{font-size:clamp(17px,1.7vw,21px);max-width:74ch;color:var(--text)}
+.review__reply{
+  margin-top:18px;padding:14px 16px;border-left:2px solid var(--accent);
+  background:var(--accent-dim);font-size:14.5px;color:var(--dim);
+}
+.review__reply span{
+  display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:6px;
+}
+.reviews__summary{
+  margin-top:34px;padding-top:20px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:12px 40px;align-items:baseline;
+  font-family:var(--f-mono);font-size:12.5px;color:var(--mute);letter-spacing:.03em;
+}
+.reviews__summary b{color:var(--accent);font-weight:400}
+
+/* ==========================================================================
+   ПРАВИЛА / КОГО НЕ СТРИЖЁМ
+   ========================================================================== */
+.rules{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(28px,5vw,60px);align-items:start}
+.nope{border-top:1px solid var(--line);counter-reset:nope}
+.nope__item{display:grid;grid-template-columns:48px minmax(0,1fr);gap:20px;
+  padding:22px 0;border-bottom:1px solid var(--line-2)}
+.nope__no{font-family:var(--f-mono);font-size:12px;color:var(--accent);letter-spacing:.08em;padding-top:5px}
+.nope__item h3{font-size:clamp(17px,2.1vw,23px);margin-bottom:8px}
+.nope__item p{font-size:15.5px;color:var(--dim);max-width:58ch}
+.minuses{border:1px solid var(--line);background:var(--ink);padding:28px 26px}
+.minuses h3{font-size:20px;margin-bottom:6px}
+.minuses > p{font-size:14px;color:var(--mute);font-family:var(--f-mono);letter-spacing:.04em;margin-bottom:20px}
+.minuses li{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line-2);font-size:15px;color:var(--dim)}
+.minuses li svg{width:16px;height:16px;flex:none;color:var(--accent);margin-top:5px}
+
+/* ==========================================================================
+   FAQ
+   ========================================================================== */
+.faq{max-width:900px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line-2)}
+.faq details[open]{background:linear-gradient(90deg,var(--accent-dim),transparent 55%)}
+.faq summary{
+  list-style:none;cursor:pointer;position:relative;
+  display:flex;gap:18px;align-items:baseline;
+  padding:22px 52px 22px 0;min-height:56px;
+  font-family:var(--f-disp);font-stretch:condensed;font-weight:800;
+  font-size:clamp(17px,2.1vw,24px);text-transform:uppercase;letter-spacing:-.012em;line-height:1.1;
+  transition:color .18s ease;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:attr(data-no);font-family:var(--f-mono);font-size:11.5px;
+  letter-spacing:.08em;color:var(--accent);padding-top:4px;flex:none}
+.faq summary::after{
+  content:"";position:absolute;right:14px;top:50%;width:11px;height:11px;margin-top:-8px;
+  border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);
+  transform:rotate(45deg);transition:transform .24s ease,margin-top .24s ease;
+}
+.faq details[open] summary::after{transform:rotate(-135deg);margin-top:-3px}
+.faq summary:hover{color:var(--accent-2)}
+.faq__a{padding:0 52px 24px 46px;font-size:15.5px;color:var(--dim);max-width:72ch}
+.faq__a p + p{margin-top:9px}
+
+/* ==========================================================================
+   ЗАПИСЬ + КОНТАКТЫ
+   ========================================================================== */
+.booking{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.82fr);
+  gap:clamp(24px,4vw,48px);align-items:start}
+.booking > *,.form__grid > *{min-width:0}
+
+.form{background:var(--ink);border:1px solid var(--line);padding:clamp(24px,3.4vw,40px)}
+.form > h3{font-size:clamp(22px,3vw,32px);margin-bottom:8px}
+.form > p{font-size:15px;color:var(--dim);margin-bottom:28px}
+.form__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field--full{grid-column:1 / -1}
+.field label{
+  font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim);
+}
+.field label .req{color:var(--accent)}
+.field input,.field select,.field textarea{
+  width:100%;min-height:48px;padding:13px 14px;
+  background:#0e0e11;color:var(--text);
+  border:1px solid var(--line);border-radius:var(--r-sm);
+  font-family:var(--f-mono);font-size:14.5px;line-height:1.5;
+  transition:border-color .18s ease,background-color .18s ease;
+}
+.field textarea{min-height:96px;resize:vertical}
+.field input::placeholder,.field textarea::placeholder{color:var(--mute)}
+.field input:hover,.field select:hover,.field textarea:hover{border-color:#3a3a44}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--accent);background:#121215;box-shadow:0 0 0 3px var(--accent-dim);
+}
+.field select{
+  appearance:none;-webkit-appearance:none;padding-right:40px;
+  background-image:linear-gradient(45deg,transparent 50%,var(--accent) 50%),linear-gradient(135deg,var(--accent) 50%,transparent 50%);
+  background-position:calc(100% - 19px) calc(50% + 3px),calc(100% - 13px) calc(50% + 3px);
+  background-size:6px 6px,6px 6px;background-repeat:no-repeat;
+}
+.field input[type="datetime-local"]{color-scheme:dark}
+.field__hint{font-family:var(--f-mono);font-size:11.5px;color:var(--mute)}
+.field input[aria-invalid="true"],.field select[aria-invalid="true"],.field textarea[aria-invalid="true"]{
+  border-color:var(--danger);background:#1a1012;box-shadow:0 0 0 3px rgba(224,87,74,.15);
+}
+.form__actions{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:4px}
+.form__consent{font-size:13px;color:var(--mute);flex:1;min-width:210px;line-height:1.5}
+.form__status{grid-column:1 / -1;display:none;gap:12px;align-items:flex-start;
+  padding:15px 16px;border:1px solid var(--accent);background:var(--accent-dim);
+  font-size:14.5px;color:var(--accent-2)}
+.form__status svg{width:18px;height:18px;flex:none;margin-top:3px}
+.form__status b{display:block;color:var(--text);font-weight:400;margin-bottom:3px}
+.form__status.is-demo{display:flex}
+.form__status.is-error{border-color:var(--danger);background:rgba(224,87,74,.12);color:#ef8a7f}
+.form__status.is-error svg{color:var(--danger)}
+
+.contacts{padding-top:4px}
+.contacts h3{font-size:clamp(20px,2.6vw,28px);margin-bottom:22px}
+.contacts__list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.contacts__item{display:grid;grid-template-columns:22px minmax(0,1fr);gap:14px;
+  padding:18px 0;border-bottom:1px solid var(--line-2)}
+.contacts__item svg{width:18px;height:18px;color:var(--accent);margin-top:4px}
+.contacts__label{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:5px}
+.contacts__value{font-size:16.5px;line-height:1.45}
+.contacts__value a:hover{color:var(--accent-2)}
+.contacts__extra{font-size:14px;color:var(--mute);margin-top:3px}
+.hours{margin-top:24px}
+.hours h4{font-size:15px;margin-bottom:12px;letter-spacing:.02em}
+.hours__row{display:flex;justify-content:space-between;gap:14px;padding:7px 0;
+  font-size:15px;color:var(--dim);border-bottom:1px solid var(--line-2)}
+.hours__row:last-child{border-bottom:0}
+.hours__row b{font-family:var(--f-mono);font-size:14px;color:var(--text);font-weight:400}
+.hours__row--hi b{color:var(--accent)}
+
+/* ==========================================================================
+   ПОДВАЛ
+   ========================================================================== */
+.footer{background:var(--bg-2);border-top:1px solid var(--line);padding-block:56px 30px}
+.footer__top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:36px;
+  padding-bottom:34px;border-bottom:1px solid var(--line-2)}
+.footer__brand p{font-size:14.5px;color:var(--mute);margin-top:16px;max-width:38ch}
+.footer h4{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:16px}
+.footer__links{display:flex;flex-direction:column;gap:10px;font-size:15px;color:var(--dim)}
+.footer__links a:hover{color:var(--accent-2)}
+.footer__links span{color:var(--mute)}
+.footer__bottom{display:flex;flex-wrap:wrap;gap:10px 30px;justify-content:space-between;
+  align-items:baseline;padding-top:22px;font-family:var(--f-mono);font-size:11.5px;
+  color:var(--mute);letter-spacing:.04em}
+/* Единственная пометка о демо: мелко, в подвале. На полотне страницы бейджа нет. */
+.footer__demo{color:#5c5952}
+
+/* ==========================================================================
+   ПОЯВЛЕНИЕ
+   ========================================================================== */
+.reveal{opacity:0;transform:translateY(20px);
+  transition:opacity .6s cubic-bezier(.22,.7,.3,1),transform .6s cubic-bezier(.22,.7,.3,1)}
+.reveal.is-visible{opacity:1;transform:none}
+
+/* ==========================================================================
+   АДАПТИВ
+   ========================================================================== */
+@media (max-width:1024px){
+  .sec{padding-block:72px}
+  .sec--tight{padding-block:52px}
+  .sec--loose{padding-block:84px}
+
+  .nav{
+    position:fixed;top:var(--header-h);left:0;right:0;margin:0;
+    background:rgba(11,11,13,.985);border-bottom:1px solid var(--line);
+    box-shadow:var(--shadow-md);max-height:0;overflow:hidden;visibility:hidden;opacity:0;
+    transition:max-height .32s ease,opacity .24s ease,visibility .32s ease;
+  }
+  .nav.is-open{max-height:min(76vh,520px);overflow-y:auto;opacity:1;visibility:visible}
+  .nav__list{flex-direction:column;align-items:stretch;gap:0;padding:6px var(--gutter) 16px}
+  .nav__link{padding:16px 4px;font-size:14px;color:var(--text);border-bottom:1px solid var(--line-2)}
+  .burger{display:inline-flex}
+  .header__actions{margin-left:auto}
+
+  .hero__grid{grid-template-columns:1fr;gap:34px}
+  .hero__side{justify-content:flex-start}
+  .hero__side .ph{max-width:230px}
+  .facts{grid-template-columns:1fr 1fr;gap:20px}
+
+  .sec__head{grid-template-columns:1fr;align-items:start;gap:22px}
+
+  .master{grid-template-columns:64px minmax(0,1fr);
+    grid-template-areas:"no id" "no text" "no facts";row-gap:18px}
+  .master:nth-child(even){padding-left:0}
+  .master__facts{border-left:0;padding-left:0;display:flex;flex-wrap:wrap;gap:8px 22px}
+  .master__facts span{display:inline}
+
+  .process{grid-template-columns:1fr}
+  .ph--process{position:static;max-width:420px;aspect-ratio:4/3}
+
+  .reviews__grid{grid-template-columns:1fr;gap:0}
+  .rules{grid-template-columns:1fr}
+  .booking{grid-template-columns:1fr}
+
+  .footer__top{grid-template-columns:1fr 1fr}
+  .footer__brand{grid-column:1 / -1}
+}
+
+@media (max-width:768px){
+  :root{--header-h:64px;--gutter:18px}
+  body{font-size:16px}
+  .sec{padding-block:58px}
+  .sec--loose{padding-block:64px}
+  .header__phone span{display:none}
+  .header .btn{padding:11px 14px;font-size:11px}
+  .hero h1{margin:20px 0 24px}
+  .hero__bleed{display:none}
+  .facts{grid-template-columns:1fr 1fr;gap:16px}
+  .row{grid-template-columns:40px minmax(0,1fr) 74px;column-gap:12px}
+  .row--lead .row__name::after{content:""}
+  .row__dots{display:none}
+  .reviews__bleed{font-size:clamp(90px,30vw,180px);top:auto;bottom:-.1em;right:-.08em;opacity:.6}
+  .reviews__summary{gap:8px 24px}
+  .form__grid{grid-template-columns:1fr}
+  .faq__a{padding-left:0;padding-right:16px}
+  .faq summary{padding-right:44px}
+  .minuses{padding:22px 20px}
+  .footer__top{grid-template-columns:1fr;gap:28px}
+}
+
+@media (max-width:480px){
+  :root{--gutter:15px}
+  .logo{font-size:21px}
+  .logo__est{display:none}
+  .header .btn{display:none}
+  .hero__cta .btn{flex:1 1 100%}
+  .hero__side{display:none}
+  .facts{grid-template-columns:1fr;gap:14px}
+  .facts dd{max-width:34ch}
+  .row{grid-template-columns:30px minmax(0,1fr);grid-template-areas:"no lead" ". note";row-gap:7px}
+  .row__time{grid-area:auto;text-align:left;grid-column:2;order:9}
+  .row__lead{flex-wrap:wrap}
+  .row__price{width:100%;text-align:left}
+  .row__name{font-size:20px}
+  .step{grid-template-columns:38px minmax(0,1fr);gap:14px}
+  .nope__item{grid-template-columns:34px minmax(0,1fr);gap:14px}
+  .master{grid-template-columns:1fr;grid-template-areas:"no" "id" "text" "facts";padding:26px 0}
+  .master__no{font-size:26px}
+  .footer__bottom{font-size:11px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important;
+  }
+  .reveal{opacity:1 !important;transform:none !important}
+  .ph--process{position:static}
+}
+
+@media print{
+  .header,.hero__bleed,.reviews__bleed,body::before,body::after{display:none !important}
+  body{background:#fff;color:#000}
+}
+</style>
+<!-- Если JS выключен: секции сразу видимы, форма не отправляет ничего -->
+<noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#price">Перейти к прайсу</a>
+
+<!-- ==========================================================================
+     ШАПКА
+     ЗАМЕНИТЬ: телефон, пункты меню, текст кнопки
+     ========================================================================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a class="logo" href="#top" aria-label="Топор, к началу страницы">
+      <svg class="logo__mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 20h16"/>
+        <path d="M6 20V9l6-5 6 5v11"/>
+        <path d="M12 4v16"/>
+        <path d="M9 12h6"/>
+      </svg>
+      ТОПОР
+      <span class="logo__est">2017 →</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Основная навигация">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="#price">Прайс</a></li>
+        <li><a class="nav__link" href="#masters">Мастера</a></li>
+        <li><a class="nav__link" href="#process">Как стрижём</a></li>
+        <li><a class="nav__link" href="#reviews">Отзывы</a></li>
+        <li><a class="nav__link" href="#contacts">Контакты</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <!-- ЗАМЕНИТЬ: телефон в href и в тексте -->
+      <a class="header__phone" href="tel:+74950000000">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/>
+        </svg>
+        <span>+7 (495) 000-00-00</span>
+      </a>
+      <a class="btn btn--primary" href="#booking">Записаться</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Открыть меню">
+        <span class="burger__box" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ==========================================================================
+       ПЕРВЫЙ ЭКРАН
+       ФОТО: заменить заглушку .ph--hero на <img src="img/hall-01.jpg" alt="Зал на Дмитровке">
+       ЗАМЕНИТЬ: заголовок и лид под клиента
+       ========================================================================== -->
+  <section class="hero" id="top">
+    <div class="hero__bleed" aria-hidden="true">2017</div>
+
+    <div class="container hero__grid">
+      <div class="hero__main">
+        <p class="kicker">Москва · Большая Дмитровка, 12</p>
+
+        <h1>Здесь<br>не стригут<br><span class="q">«покороче»</span></h1>
+
+        <p class="hero__lead">
+          Пять кресел, четыре мастера и журнал, куда мы с 2017 года записываем каждую стрижку.
+          Всего набралось <b>40 128 записей</b> — по ним видно, что фейд живёт три недели, а не пять дней.
+        </p>
+        <p class="hero__lead">
+          Приходите с грязной головой: помоем сами, сухие волосы врут про длину на сантиметр с лишним.
+          Скриншот из Pinterest несём в кресло и честно говорим, ляжет он на ваши волосы или нет.
+        </p>
+
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#booking">Записаться на стрижку</a>
+          <a class="btn btn--ghost" href="#price">Прайс без «от»</a>
+        </div>
+
+        <dl class="facts">
+          <div>
+            <dt>40 128</dt>
+            <dd>стрижек в журнале с 2017 года</dd>
+          </div>
+          <div>
+            <dt>4 мастера</dt>
+            <dd>имя и кресло — выбираете сами</dd>
+          </div>
+          <div>
+            <dt>12:00–22:00</dt>
+            <dd>семь дней в неделю, последняя запись в 21:00</dd>
+          </div>
+          <div>
+            <dt>3 часа</dt>
+            <dd>бесплатная отмена, позже — 500 ₽ уходят мастеру</dd>
+          </div>
+        </dl>
+      </div>
+
+      <aside class="hero__side">
+        <span class="vert">Топор · Дмитровка · 2017</span>
+        <!-- ФОТО: <img src="img/hall-01.jpg" alt="Зал барбершопа"> первым элементом внутрь .ph__body -->
+        <figure class="ph ph--hero" data-photo="Зал на Дмитровке: 5 кресел, окна во двор">
+          <img src="img/hall-01.jpg" width="486" height="648" alt="Зал барбершопа: пять кресел, два окна во двор" fetchpriority="high">
+          <span class="ph__marks" aria-hidden="true"></span>
+          <figcaption class="ph__body">
+            <span class="ph__num">01</span>
+            <span class="ph__cap">Зал на Дмитровке: пять кресел, два окна во двор, кофе на входе</span>
+          </figcaption>
+        </figure>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ПРАЙС-ЛИСТ НА СТЕНЕ
+       ЗАМЕНИТЬ: названия, пояснения, цены и время
+       ========================================================================== -->
+  <section class="sec sec--loose" id="price">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div>
+          <p class="kicker">01 / Прайс</p>
+          <h2>Столько стоит.<br>Без «от» и звёздочек</h2>
+        </div>
+        <p class="note">
+          Прайс висит у входа с ноября 2024 года и с тех пор не менялся. Мы не накидываем
+          за длину волос, густоту и «сложность формы» — итог в чеке совпадает со строчкой на стене.
+        </p>
+      </div>
+
+      <ul class="wall reveal">
+        <li class="row">
+          <span class="row__no">01</span>
+          <span class="row__lead">
+            <span class="row__name">Стрижка машинкой</span>
+            <span class="row__dots" aria-hidden="true"></span>
+            <span class="row__price">1 400 ₽</span>
+          </span>
+          <span class="row__note">Одна длина, без ножниц и без перехода. Просят те, кто стрижётся сам и приходит «подровнять бока».</span>
+          <span class="row__time">25 мин</span>
+        </li>
+
+        <li class="row row--lead">
+          <span class="row__no">02</span>
+          <span class="row__lead">
+            <span class="row__name">Мужская стрижка</span>
+            <span class="row__dots" aria-hidden="true"></span>
+            <span class="row__price">2 200 ₽</span>
+          </span>
+          <span class="row__note">Ножницы и машинка: разбор линии роста, мытьё, стрижка, укладка. Показываем, чем держим форму, чтобы повторили дома.</span>
+          <span class="row__time">55 мин</span>
+        </li>
+
+        <li class="row">
+          <span class="row__no">03</span>
+          <span class="row__lead">
+            <span class="row__name">Стрижка + борода</span>
+            <span class="row__dots" aria-hidden="true"></span>
+            <span class="row__price">3 100 ₽</span>
+          </span>
+          <span class="row__note">Всё то же плюс борода: контур опасной бритвой, длина ножницами, горячее полотенце и масло в конце.</span>
+          <span class="row__time">1 ч 30 мин</span>
+        </li>
+
+        <li class="row">
+          <span class="row__no">04</span>
+          <span class="row__lead">
+            <span class="row__name">Оформление бороды</span>
+            <span class="row__dots" aria-hidden="true"></span>
+            <span class="row__price">1 300 ₽</span>
+          </span>
+          <span class="row__note">Одна борода, без стрижки. Если растительность меньше двух сантиметров — скажем честно, что форму ещё не из чего делать.</span>
+          <span class="row__time">35 мин</span>
+        </li>
+
+        <li class="row">
+          <span class="row__no">05</span>
+          <span class="row__lead">
+            <span class="row__name">Королевское бритьё</span>
+            <span class="row__dots" aria-hidden="true"></span>
+            <span class="row__price">2 700 ₽</span>
+          </span>
+          <span class="row__note">Опасная бритва в два прохода, горячее полотенце, премиальное масло, холодный компресс. Бреет не «до скрипа», а до спокойной кожи.</span>
+          <span class="row__time">50 мин</span>
+        </li>
+
+        <li class="row">
+          <span class="row__no">06</span>
+          <span class="row__lead">
+            <span class="row__name">Отец и сын</span>
+            <span class="row__dots" aria-hidden="true"></span>
+            <span class="row__price">3 400 ₽</span>
+          </span>
+          <span class="row__note">Два кресла рядом, два мастера, один заход. Детская часть — с 4 лет, минус 20% от цены взрослой стрижки.</span>
+          <span class="row__time">1 ч 20 мин</span>
+        </li>
+
+        <li class="row">
+          <span class="row__no">07</span>
+          <span class="row__lead">
+            <span class="row__name">Тонирование и укладка</span>
+            <span class="row__dots" aria-hidden="true"></span>
+            <span class="row__price">1 000 ₽</span>
+          </span>
+          <span class="row__note">Убираем желтизну и красим седину в тон, без «блонда». Укладка на выход — тот же прайс, без наценки за событие.</span>
+          <span class="row__time">30 мин</span>
+        </li>
+      </ul>
+
+      <div class="wall__foot reveal">
+        <span><b>Оплата:</b> карта, наличные, QR. После стрижки, не вперёд</span>
+        <span><b>Скидки:</b> студентам −15% по будням до 15:00, пенсионерам −20%</span>
+        <span><b>Коррекция контура:</b> бесплатно в течение 10 дней</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       МАСТЕРА
+       ФОТО: если появятся портреты — отдельным рядом <figure class="ph"> у каждого
+       ========================================================================== -->
+  <section class="sec sec--paper" id="masters">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div>
+          <p class="kicker">02 / Мастера</p>
+          <h2>Четыре человека,<br>четыре характера</h2>
+        </div>
+        <p class="note">
+          Мы не сажаем «любого свободного» без предупреждения. Если ваш мастер занят — предложим
+          другое время или другого мастера с его согласия, а не поставим перед фактом в кресле.
+        </p>
+      </div>
+
+      <div class="crew">
+
+        <article class="master reveal">
+          <span class="master__no">01</span>
+          <div class="master__id">
+            <h3 class="master__name">Артём Северин</h3>
+            <p class="master__spec">Фейды · хард-парт · кроп</p>
+          </div>
+          <p class="master__text">
+            Начинает с <b>десятиминутного молчания</b>: смотрит, куда растёт вихор и как волос ложится
+            после мытья. Не любит слово «покороче» — просит показать пальцами, сколько снимать.
+            Фейд на 0,5 не делает: на такой длине видно каждую вмятину черепа.
+          </p>
+          <div class="master__facts">
+            <span>Стаж <b>9 лет</b></span>
+            <span>Кресло <b>у окна</b></span>
+            <span>Свободен <b>пн–чт</b></span>
+          </div>
+        </article>
+
+        <article class="master reveal">
+          <span class="master__no">02</span>
+          <div class="master__id">
+            <h3 class="master__name">Марат Кузнецов</h3>
+            <p class="master__spec">Борода · опасная бритва</p>
+          </div>
+          <p class="master__text">
+            Держит бритву в правой, левой разговаривает. На бритьё у него <b>50 минут и ни минутой меньше</b> —
+            за это время кожа успевает успокоиться. Если борода отросла неровно, скажет, что контур придётся
+            отращивать месяц, и не станет обещать чуда за один визит.
+          </p>
+          <div class="master__facts">
+            <span>Стаж <b>7 лет</b></span>
+            <span>Кресло <b>№3</b></span>
+            <span>Свободен <b>ср–вс</b></span>
+          </div>
+        </article>
+
+        <article class="master reveal">
+          <span class="master__no">03</span>
+          <div class="master__id">
+            <h3 class="master__name">Денис Волков</h3>
+            <p class="master__spec">Классика · седина · укладка</p>
+          </div>
+          <p class="master__text">
+            Восемь лет стриг в театральном цехе — привык, чтобы форма читалась <b>с последнего ряда</b>.
+            Аккуратно работает с сединой: не выводит её в ноль, а подбирает тон, чтобы отросшая часть
+            не выглядела полосой. Любит, когда просят «как в прошлый раз».
+          </p>
+          <div class="master__facts">
+            <span>Стаж <b>11 лет</b></span>
+            <span>Кресло <b>№5</b></span>
+            <span>Свободен <b>пн–пт</b></span>
+          </div>
+        </article>
+
+        <article class="master reveal">
+          <span class="master__no">04</span>
+          <div class="master__id">
+            <h3 class="master__name">Кирилл Дёмин</h3>
+            <p class="master__spec">Детские стрижки · отец и сын</p>
+          </div>
+          <p class="master__text">
+            Первые пять минут разговаривает <b>с ребёнком, а не с родителем</b> — договаривается, где будет
+            «дождик» из пульверизатора и как выглядит машинка. Детей младше четырёх не стрижёт: отдельного
+            кресла и мультиков у нас нет, а уговаривать в кресле — не метод.
+          </p>
+          <div class="master__facts">
+            <span>Стаж <b>4 года</b></span>
+            <span>Кресло <b>№2</b></span>
+            <span>Свободен <b>чт–вс</b></span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       КАК СТРИЖЁМ
+       ФОТО: заменить .ph--process на <img src="img/hands-01.jpg" alt="Руки мастера">
+       ========================================================================== -->
+  <section class="sec" id="process">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div>
+          <p class="kicker">03 / Порядок работы</p>
+          <h2>Пять вещей,<br>которые не обсуждаются</h2>
+        </div>
+        <p class="note">
+          Это не «этапы оказания услуги», а привычки, которые мы завели за восемь лет. Если мастер
+          пропустил пункт — скажите об этом на кассе, стрижка за наш счёт.
+        </p>
+      </div>
+
+      <div class="process">
+        <div class="steps reveal">
+          <article class="step">
+            <span class="step__no">01</span>
+            <div>
+              <h3>Сначала разговор, потом ножницы</h3>
+              <p>Минут десять смотрим линию роста, вихор, шрам или родинку, длину шеи и форму затылка.
+                За это время вы успеваете передумать и уйти — мы не обидимся.</p>
+            </div>
+          </article>
+
+          <article class="step">
+            <span class="step__no">02</span>
+            <div>
+              <h3>Моем голову до стрижки</h3>
+              <p>Сухие волосы врут про длину: после мытья прядь поднимается на сантиметр и стрижка
+                «всё нормально» превращается в «короче, чем я просил».</p>
+            </div>
+          </article>
+
+          <article class="step">
+            <span class="step__no">03</span>
+            <div>
+              <h3>Ножницы — форма, машинка — переход</h3>
+              <p>Основа всегда ножницами. Машинка доводит фейд и убирает пушок на шее. Если у вас
+                мягкий тонкий волос, переход делаем длиннее обычного — иначе через неделю это уже не фейд.</p>
+            </div>
+          </article>
+
+          <article class="step">
+            <span class="step__no">04</span>
+            <div>
+              <h3>Укладку делаем при вас</h3>
+              <p>Показываем, сколько пасты брать — размером с горошину, — в каком направлении тянуть
+                и чем это смывается. Без десятиминутного урока на словах «ну вы поняли».</p>
+            </div>
+          </article>
+
+          <article class="step">
+            <span class="step__no">05</span>
+            <div>
+              <h3>Через 10 дней — бесплатная коррекция</h3>
+              <p>Контур на шее и висках зарастает первым, это нормально. Приходите без записи, в порядке
+                живой очереди: снимаем лишнее за 10 минут и ни рубля не берём.</p>
+            </div>
+          </article>
+        </div>
+
+        <aside>
+          <!-- ФОТО: <img src="img/hands-01.jpg" alt="Мастер за работой"> первым элементом внутрь .ph__body -->
+          <figure class="ph ph--process" data-photo="Руки мастера с ножницами и расчёской">
+            <img src="img/hands-01.jpg" width="689" height="861" alt="Мастер за работой: ножницы и расчёска" loading="lazy" decoding="async">
+            <span class="ph__marks" aria-hidden="true"></span>
+            <figcaption class="ph__body">
+              <span class="ph__num">02</span>
+              <span class="ph__cap">Ножницы 6.0, расчёска с частым зубом, паста — на горошину</span>
+            </figcaption>
+          </figure>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ОТЗЫВЫ
+       ЗАМЕНИТЬ: тексты отзывов на реальные (в том числе с низкой оценкой)
+       ========================================================================== -->
+  <section class="sec sec--tight reviews sec--paper" id="reviews">
+    <div class="reviews__bleed" aria-hidden="true">4,7</div>
+    <div class="container reviews__inner">
+      <div class="sec__head reveal">
+        <div>
+          <p class="kicker">04 / Отзывы</p>
+          <h2>Что говорят.<br>И один раз — что нет</h2>
+        </div>
+        <p class="note">
+          Средняя оценка — 4,7 по 218 отзывам в Яндекс Картах и 2ГИС. Одиннадцать отзывов с одной
+          и двумя звёздами мы не удаляли: на них удобно смотреть, когда хочется поверить в собственную непогрешимость.
+        </p>
+      </div>
+
+      <div class="reviews__grid">
+
+        <article class="review review--wide reveal">
+          <div class="review__top">
+            <span class="review__stars" role="img" aria-label="Оценка 5 из 5">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+            </span>
+            <span class="review__who">Игорь Л. · 34 года · Замоскворечье</span>
+            <span class="review__meta">февраль 2026 · мужская стрижка</span>
+          </div>
+          <p class="review__text">
+            Записался к Артёму на 12:40, вышел в 13:45. Отдельно запомнилось, как он минут пять разбирал вихор
+            справа, из-за которого мне полжизни заминали одну сторону: теперь прядь лежит сама, без укладки на
+            два флакона геля. Через две недели заехал за коррекцией контура — не взяли ни рубля.
+          </p>
+        </article>
+
+        <article class="review reveal">
+          <div class="review__top">
+            <span class="review__stars" role="img" aria-label="Оценка 5 из 5">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+            </span>
+            <span class="review__who">Сергей К.</span>
+            <span class="review__meta">декабрь 2025 · борода + бритьё</span>
+          </div>
+          <p class="review__text">
+            Пришёл с бородой, которую до этого дважды испортили в салоне у метро. Марат честно сказал: контур
+            придётся отращивать ещё месяц, и чуда сегодня не будет. Через месяц вернулся — получилось ровно
+            то, что обсуждали. Ценю за то, что не стали обещать красоту за один визит.
+          </p>
+        </article>
+
+        <article class="review reveal">
+          <div class="review__top">
+            <span class="review__stars" role="img" aria-label="Оценка 4 из 5">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg class="is-off" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+            </span>
+            <span class="review__who">Дмитрий В.</span>
+            <span class="review__meta">январь 2026 · стрижка машинкой</span>
+          </div>
+          <p class="review__text">
+            Стрижка нормальная, спорить не буду. Но ждал 25 минут: предыдущий клиент опоздал, а мне об этом
+            никто не позвонил — узнал уже в кресле. Пятничный вечер я планировал иначе.
+          </p>
+          <div class="review__reply">
+            <span>Топор · ответ заведения</span>
+            <p>Дмитрий, предупредить вас мы были обязаны — не предупредили, значит наша вина.
+              Убрали это в регламент: если мастер опаздывает больше чем на 10 минут, звоним сами.
+              Скидка 15% на следующий визит уже в системе.</p>
+          </div>
+        </article>
+
+        <article class="review reveal">
+          <div class="review__top">
+            <span class="review__stars" role="img" aria-label="Оценка 5 из 5">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>
+            </span>
+            <span class="review__who">Анна П. · мама Мирона, 5 лет</span>
+            <span class="review__meta">март 2026 · отец и сын</span>
+          </div>
+          <p class="review__text">
+            Первый раз в барбершопе, я боялась истерики. Кирилл первые пять минут разговаривал с сыном, а не
+            со мной: показал машинку, дал потрогать, договорился про «дождик». Стрижка прошла без слёз,
+            два кресла стояли рядом, как и обещали. Дороже парикмахерской у дома, но за спокойствие — нормально.
+          </p>
+        </article>
+
+      </div>
+
+      <div class="reviews__summary reveal">
+        <span><b>218</b> отзывов в Яндекс Картах и 2ГИС</span>
+        <span><b>4,7</b> средняя оценка</span>
+        <span><b>11</b> отзывов с 1–2 звёздами, не удалены</span>
+        <span><b>61%</b> клиентов возвращаются к тому же мастеру</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ПРАВИЛА / КОГО НЕ СТРИЖЁМ
+       ЗАМЕНИТЬ: правила под клиента — это самый «живой» текст на странице
+       ========================================================================== -->
+  <section class="sec sec--loose" id="rules">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div>
+          <p class="kicker">05 / Правила заведения</p>
+          <h2>Кого мы<br>не стрижём</h2>
+        </div>
+        <p class="note">
+          Отказывать неудобно, но честнее, чем брать деньги и делать вид, что получилось.
+          Пять пунктов, по которым мы говорим «нет» — и три минуса, которые никуда не денутся.
+        </p>
+      </div>
+
+      <div class="rules">
+        <div class="nope reveal">
+
+          <article class="nope__item">
+            <span class="nope__no">01</span>
+            <div>
+              <h3>Детей младше четырёх лет</h3>
+              <p>Отдельного кресла и мультиков у нас нет, а уговаривать ребёнка в кресле под ножницами —
+                плохая идея для всех. С четырёх лет стрижём спокойно, минус 20% от взрослой цены.</p>
+            </div>
+          </article>
+
+          <article class="nope__item">
+            <span class="nope__no">02</span>
+            <div>
+              <h3>«Подровняйте сзади» в пятницу после 19:00</h3>
+              <p>В это время заняты все пять кресел, и за пятнадцать минут получится дырка, а не стрижка.
+                Приходите утром в будни или берите бесплатную коррекцию контура — она как раз про «сзади».</p>
+            </div>
+          </article>
+
+          <article class="nope__item">
+            <span class="nope__no">03</span>
+            <div>
+              <h3>Наращивание, химзавивку и блонд</h3>
+              <p>Это не барберинг: у нас нет ни колориста, ни нужных составов. Если попросите — направим
+                в салон на Петровке, с которым дружим восемь лет.</p>
+            </div>
+          </article>
+
+          <article class="nope__item">
+            <span class="nope__no">04</span>
+            <div>
+              <h3>«Как на фото» без обсуждения</h3>
+              <p>Приносить скриншот можно и нужно. Но если форма не ляжет на ваш тип волос — скажем это
+                до первого среза, а не после. Молча сделать чужую стрижку мы не умеем.</p>
+            </div>
+          </article>
+
+          <article class="nope__item">
+            <span class="nope__no">05</span>
+            <div>
+              <h3>Опаздывать больше чем на 20 минут</h3>
+              <p>Тогда стрижка сокращается до того, что успеваем, а следующий клиент не должен ждать
+                из-за чужого опоздания. Позвоните — придумаем, как вписать вас в день.</p>
+            </div>
+          </article>
+
+        </div>
+
+        <aside class="minuses reveal">
+          <h3>Минусы, о которых знаем</h3>
+          <p>// и не собираемся прятать</p>
+          <ul>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 8v5M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg>
+              <span>Вход со двора, вывеска маленькая. Не нашли — звоните, выйдем встретить.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 8v5M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg>
+              <span>Своей парковки нет, только платная городская вдоль Дмитровки. От метро — пять минут пешком.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 8v5M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg>
+              <span>В субботу после 18:00 свободных окон почти не бывает. Планируйте за три-четыре дня.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 8v5M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg>
+              <span>Интерьер скромный: гипс, кирпич и лампы. Фотозона только одна — у окна.</span>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FAQ
+       ЗАМЕНИТЬ: вопросы и ответы под клиента
+       ========================================================================== -->
+  <section class="sec" id="faq">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div>
+          <p class="kicker">06 / Вопросы</p>
+          <h2>Шесть вопросов,<br>которые задают в кресле</h2>
+        </div>
+        <p class="note">
+          Если вашего вопроса здесь нет — звоните, отвечаем вживую и без скрипта.
+          Последняя запись на сегодня — в 21:00.
+        </p>
+      </div>
+
+      <div class="faq reveal">
+        <details open>
+          <summary data-no="01">Сколько стоит стрижка и сколько это по времени?</summary>
+          <div class="faq__a">
+            <p>Мужская стрижка — 2 200 ₽ и 55 минут, машинкой — 1 400 ₽ и 25 минут, стрижка с бородой —
+              3 100 ₽ и полтора часа. Королевское бритьё — 2 700 ₽, 50 минут. Всё, что дороже, вы услышите
+              до того, как мастер возьмёт ножницы.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary data-no="02">Можно прийти без записи?</summary>
+          <div class="faq__a">
+            <p>Да, но есть риск постоять. Свободное кресло бывает в будни до 15:00 и в воскресенье
+              до полудня. В пятницу и субботу после 18:00 живой очереди практически не остаётся —
+              всё расписано на три-четыре дня вперёд.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary data-no="03">А если стрижка не понравится?</summary>
+          <div class="faq__a">
+            <p>Скажите прямо в кресле — переделаем сразу, пока вы не ушли. Если поняли дома, приходите
+              в течение семи дней: поправим бесплатно, без разговоров про «вы сами так просили».
+              Именно поэтому мы всегда показываем, сколько снимаем, в процессе.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary data-no="04">С какого возраста стрижёте детей?</summary>
+          <div class="faq__a">
+            <p>С четырёх лет. Раньше — не берём: нет отдельного кресла и мультиков, а держать ребёнка
+              в кресле силой мы не будем. Для «отец и сын» ставим два кресла рядом, детская часть
+              идёт со скидкой 20%.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary data-no="05">Как отменить или перенести запись?</summary>
+          <div class="faq__a">
+            <p>Звонком или сообщением в мессенджер не позднее чем за три часа — бесплатно.
+              Позже — 500 ₽, они уходят мастеру: это время он уже не продаст другому.
+              Мы не берём предоплату, поэтому держимся на честном слове с обеих сторон.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary data-no="06">Чем платить и есть ли скидки?</summary>
+          <div class="faq__a">
+            <p>Карта, наличные, QR-перевод. Оплата после стрижки, вперёд не берём. Скидки: студентам −15%
+              по будням до 15:00, пенсионерам −20% в любой день. Есть сертификаты на сумму и на услугу —
+              спрашивайте на кассе, срок действия не ограничен.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ЗАПИСЬ + КОНТАКТЫ
+       ЗАМЕНИТЬ: телефон, адрес, часы, e-mail
+
+       ФОРМА РАБОТАЕТ В ДЕМО-РЕЖИМЕ: данные никуда не уходят, JS перехватывает submit.
+       Как подключить настоящую отправку:
+       1) Formspree — зарегистрироваться, получить endpoint вида
+          https://formspree.io/f/xxxxxxx
+          и добавить в тег <form> атрибуты action="https://formspree.io/f/xxxxxxx" method="POST",
+          а в обработчике submit ниже убрать e.preventDefault().
+       2) Telegram Bot API — создать бота у BotFather, узнать chat_id и в обработчике submit
+          заменить демо-блок на fetch("https://api.telegram.org/bot<ТОКЕН>/sendMessage", {...}).
+          Токен нельзя держать в открытом виде на клиенте: нужен свой серверный прокси
+          (Cloudflare Worker, Vercel Function — что угодно).
+       ========================================================================== -->
+  <section class="sec sec--paper" id="booking">
+    <div class="container">
+      <div class="sec__head reveal">
+        <div>
+          <p class="kicker">07 / Запись</p>
+          <h2>Оставьте номер —<br>перезвоним за 15 минут</h2>
+        </div>
+        <p class="note">
+          Подтверждаем время звонком или сообщением. Если окно уже занято, предложим ближайшее
+          свободное и назовём мастера по имени.
+        </p>
+      </div>
+
+      <div class="booking">
+
+        <div class="form reveal">
+          <h3>Заявка на визит</h3>
+          <p>Поля со звёздочкой обязательны. Отменяете больше чем за три часа — ничего не должны.</p>
+
+          <!-- action/method добавить при подключении Formspree (см. комментарий перед секцией) -->
+          <form class="form__grid" id="booking-form" novalidate>
+            <div class="field">
+              <label for="name">Имя <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="name" name="name" placeholder="Как к вам обращаться" autocomplete="name" required>
+            </div>
+
+            <div class="field">
+              <label for="phone">Телефон <span class="req" aria-hidden="true">*</span></label>
+              <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" inputmode="tel" autocomplete="tel" required>
+            </div>
+
+            <div class="field">
+              <label for="master">Мастер</label>
+              <select id="master" name="master">
+                <option value="any">Кто свободен — посоветуйте</option>
+                <option value="artem">Артём Северин — фейды, хард-парт</option>
+                <option value="marat">Марат Кузнецов — борода, бритва</option>
+                <option value="denis">Денис Волков — классика, седина</option>
+                <option value="kirill">Кирилл Дёмин — детские, отец и сын</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="datetime">Дата и время <span class="req" aria-hidden="true">*</span></label>
+              <input type="datetime-local" id="datetime" name="datetime" required>
+              <span class="field__hint">Ежедневно 12:00–22:00, последняя запись в 21:00</span>
+            </div>
+
+            <div class="field field--full">
+              <label for="comment">Комментарий</label>
+              <textarea id="comment" name="comment" placeholder="Например: фейд на 1,5 и борода; в прошлый раз щипало, когда снимали контур"></textarea>
+            </div>
+
+            <div class="form__status" id="form-status" role="status" aria-live="polite">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/><path d="m20 6-9 11-5-5"/>
+              </svg>
+              <span id="form-status-text"></span>
+            </div>
+
+            <div class="form__actions">
+              <button class="btn btn--primary" type="submit" id="submit-btn">Отправить заявку</button>
+              <p class="form__consent">
+                Нажимая кнопку, вы соглашаетесь на обработку персональных данных.
+                Форма демонстрационная — заявка никуда не отправляется.
+              </p>
+            </div>
+          </form>
+        </div>
+
+        <aside class="contacts reveal" id="contacts">
+          <h3>Контакты</h3>
+
+          <div class="contacts__list">
+            <div class="contacts__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              <div>
+                <div class="contacts__label">Адрес</div>
+                <!-- ЗАМЕНИТЬ: адрес -->
+                <div class="contacts__value">Москва, ул. Большая Дмитровка, 12, стр. 2</div>
+                <div class="contacts__extra">Вход со двора, 2-й этаж, звонок справа от вывески. м. Кузнецкий Мост — 5 минут пешком</div>
+              </div>
+            </div>
+
+            <div class="contacts__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/>
+              </svg>
+              <div>
+                <div class="contacts__label">Телефон</div>
+                <!-- ЗАМЕНИТЬ: телефон -->
+                <div class="contacts__value"><a href="tel:+74950000000">+7 (495) 000-00-00</a></div>
+                <div class="contacts__extra">Отвечаем 12:00–22:00, без выходных. Не дозвонились — напишите</div>
+              </div>
+            </div>
+
+            <div class="contacts__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/>
+              </svg>
+              <div>
+                <div class="contacts__label">Почта</div>
+                <!-- ЗАМЕНИТЬ: e-mail -->
+                <div class="contacts__value"><a href="mailto:hello@topor-barber.example">hello@topor-barber.example</a></div>
+                <div class="contacts__extra">Для корпоративных записей, съёмок и сертификатов</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hours">
+            <h4>Часы работы</h4>
+            <div class="hours__row"><span>Понедельник — пятница</span><b>12:00 — 22:00</b></div>
+            <div class="hours__row"><span>Суббота — воскресенье</span><b>12:00 — 22:00</b></div>
+            <div class="hours__row hours__row--hi"><span>Выходные</span><b>их нет</b></div>
+            <div class="hours__row"><span>Последняя запись</span><b>21:00</b></div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     ПОДВАЛ
+     ЗАМЕНИТЬ: название, ссылки, год
+     ========================================================================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="logo" href="#top" aria-label="Топор, к началу страницы">
+          <svg class="logo__mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 20h16"/><path d="M6 20V9l6-5 6 5v11"/><path d="M12 4v16"/><path d="M9 12h6"/>
+          </svg>
+          ТОПОР
+        </a>
+        <p>Барбершоп на Большой Дмитровке с 2017 года. Четыре мастера, пять кресел,
+          журнал на 40 128 стрижек и прайс, который не менялся с ноября 2024-го.</p>
+      </div>
+
+      <div>
+        <h4>Разделы</h4>
+        <div class="footer__links">
+          <a href="#price">Прайс</a>
+          <a href="#masters">Мастера</a>
+          <a href="#process">Как стрижём</a>
+          <a href="#reviews">Отзывы</a>
+          <a href="#rules">Правила заведения</a>
+          <a href="#faq">Вопросы</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Связь</h4>
+        <div class="footer__links">
+          <!-- ЗАМЕНИТЬ: телефон, почта, адрес -->
+          <a href="tel:+74950000000">+7 (495) 000-00-00</a>
+          <a href="mailto:hello@topor-barber.example">hello@topor-barber.example</a>
+          <span>ул. Большая Дмитровка, 12, стр. 2</span>
+          <span>Ежедневно 12:00–22:00</span>
+          <a href="#booking">Онлайн-запись</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2017–2026 Барбершоп «Топор». Все права защищены.</span>
+      <span class="footer__demo">Демо-проект для портфолио: данные, цены, отзывы и адрес вымышленные</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- 1. Бургер-меню ---------- */
+  var burger = document.getElementById("burger");
+  var nav = document.getElementById("nav");
+  var navLinks = nav ? nav.querySelectorAll("a") : [];
+
+  function closeNav() {
+    if (!nav || !burger) return;
+    nav.classList.remove("is-open");
+    burger.setAttribute("aria-expanded", "false");
+    burger.setAttribute("aria-label", "Открыть меню");
+  }
+
+  function toggleNav() {
+    if (!nav || !burger) return;
+    var open = nav.classList.toggle("is-open");
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    burger.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+  }
+
+  if (burger) burger.addEventListener("click", toggleNav);
+
+  Array.prototype.forEach.call(navLinks, function (link) {
+    link.addEventListener("click", closeNav);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeNav();
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!nav || !burger) return;
+    if (!nav.classList.contains("is-open")) return;
+    if (nav.contains(e.target) || burger.contains(e.target)) return;
+    closeNav();
+  });
+
+  /* ---------- 2. Плавный скролл с учётом высоты шапки ---------- */
+  var header = document.getElementById("header");
+
+  function headerOffset() {
+    return header ? header.getBoundingClientRect().height + 14 : 82;
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'), function (link) {
+    link.addEventListener("click", function (e) {
+      var href = link.getAttribute("href");
+      if (!href || href === "#") return;
+      var target = document.getElementById(href.slice(1));
+      if (!target) return;
+
+      e.preventDefault();
+      var top = target.getBoundingClientRect().top + window.pageYOffset - headerOffset();
+      if (top < 0) top = 0;
+
+      if (reduceMotion) window.scrollTo(0, top);
+      else window.scrollTo({ top: top, behavior: "smooth" });
+
+      if (history.replaceState) history.replaceState(null, "", href);
+    });
+  });
+
+  /* ---------- 3. Тень шапки при скролле ---------- */
+  function onScroll() {
+    if (!header) return;
+    header.style.boxShadow = window.pageYOffset > 8 ? "0 10px 26px rgba(0,0,0,.45)" : "none";
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- 4. Появление блоков ---------- */
+  var revealItems = document.querySelectorAll(".reveal");
+
+  if (!("IntersectionObserver" in window) || reduceMotion) {
+    Array.prototype.forEach.call(revealItems, function (el) { el.classList.add("is-visible"); });
+  } else {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.06 });
+
+    Array.prototype.forEach.call(revealItems, function (el) { observer.observe(el); });
+  }
+
+  /* ---------- 5. Форма (демо-режим) ----------
+     Formspree / Telegram Bot API — см. HTML-комментарий перед секцией #booking. */
+  var form = document.getElementById("booking-form");
+  var status = document.getElementById("form-status");
+  var statusText = document.getElementById("form-status-text");
+
+  function escapeHtml(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  if (form) {
+    var dt = document.getElementById("datetime");
+    if (dt) {
+      var now = new Date();
+      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+      dt.min = now.toISOString().slice(0, 16);
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      var name = form.elements["name"];
+      var phone = form.elements["phone"];
+      var when = form.elements["datetime"];
+      var masterSelect = form.elements["master"];
+
+      var invalid = null;
+      [name, phone, when].forEach(function (field) {
+        if (!field) return;
+        field.removeAttribute("aria-invalid");
+        if (!String(field.value || "").trim()) {
+          field.setAttribute("aria-invalid", "true");
+          if (!invalid) invalid = field;
+        }
+      });
+
+      if (invalid) {
+        if (status) {
+          status.className = "form__status is-demo is-error";
+          if (statusText) {
+            statusText.innerHTML = "<b>Не хватает данных</b>Без имени, телефона и времени мы не сможем подтвердить визит.";
+          }
+        }
+        invalid.focus();
+        return;
+      }
+
+      var masterName = (masterSelect && masterSelect.selectedIndex >= 0)
+        ? masterSelect.options[masterSelect.selectedIndex].text
+        : "Кто свободен — посоветуйте";
+
+      var pretty = String(when.value || "").replace("T", " в ");
+
+      if (status) {
+        status.className = "form__status is-demo";
+        if (statusText) {
+          statusText.innerHTML =
+            "<b>" + escapeHtml(name.value) + ", заявка принята.</b>" +
+            "Перезвоним на " + escapeHtml(phone.value) + " в течение 15 минут и подтвердим: " +
+            escapeHtml(pretty) + " · " + escapeHtml(masterName) + "." +
+            '<br><span style="font-family:var(--f-mono);font-size:11.5px;color:var(--mute)">' +
+            "Демо-режим: заявка никуда не отправлена.</span>";
+        }
+        status.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+      }
+
+      form.reset();
+    });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Белый Ключ — стоматология в Хамовниках, Большой Лёвшинский переулок</title>
+<meta name="description" content="Небольшая стоматология в Хамовниках: четыре врача, два кресла, рентген. Первый визит — осмотр, снимок и письменный план с суммой. Цены на лечение кариеса, каналов, имплантацию и брекеты.">
+<meta name="theme-color" content="#0a3b44">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Белый Ключ — стоматология в Хамовниках">
+<meta property="og:description" content="Четыре врача, свой хирург и ортодонт. Первый визит 63 минуты: осмотр, снимок, письменный план с суммой. Цены, врачи, отзывы.">
+<!-- ЗАМЕНИТЬ: при публикации добавьте og:url и og:image со своим доменом и фото клиники -->
+
+<style>
+/* ==========================================================================
+   «Белый Ключ» — демо-лендинг частной стоматологии в Хамовниках.
+   Вёрстка сознательно «печатная», а не SaaS: острые углы, волосяные линии
+   вместо теней, серифные заголовки, асимметричные сетки, крупные пустоты.
+   Внешних запросов нет: системные шрифты, графика на CSS и инлайновом SVG.
+   ========================================================================== */
+
+:root{
+  /* Бумага и чернила */
+  --paper:#fbfaf6;
+  --paper-2:#f1eee7;
+  --white:#ffffff;
+  --ink:#191b1d;
+  --ink-2:#575d62;
+  --ink-3:#8b9095;
+  --rule:#ded8ce;
+  --rule-2:#ebe7de;
+
+  /* Медицинский teal, приглушённый */
+  --teal:#125b68;
+  --teal-d:#0a3b44;
+  --teal-l:#e7f0f1;
+  --warm:#9c6a37;
+
+  /* Шрифты: только системные */
+  --serif:Georgia,"Times New Roman","PT Serif",serif;
+  --sans:"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,"Liberation Mono",monospace;
+
+  --container:1180px;
+  --pad:clamp(18px,4vw,32px);
+  --header-h:66px;
+  --sect:clamp(58px,7.5vw,108px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(var(--header-h) + 16px);
+  -webkit-text-size-adjust:100%;
+}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink-2);
+  font-family:var(--sans);
+  font-size:clamp(15.5px,1.02vw,16.5px);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4{
+  font-family:var(--serif);
+  font-weight:400;
+  color:var(--ink);
+  line-height:1.12;
+  letter-spacing:-.012em;
+  margin:0 0 .45em;
+}
+h1{font-size:clamp(2.1rem,5.2vw,3.8rem);line-height:1.03;letter-spacing:-.025em}
+h2{font-size:clamp(1.55rem,3.2vw,2.4rem)}
+h3{font-size:clamp(1.02rem,1.5vw,1.18rem);margin-bottom:.3em}
+
+p{margin:0 0 1em}
+p:last-child{margin-bottom:0}
+a{color:var(--teal);text-decoration-thickness:1px;text-underline-offset:3px}
+img{max-width:100%;display:block}
+ul,ol{margin:0;padding:0;list-style:none}
+button,input,select,textarea{font:inherit;color:inherit}
+blockquote{margin:0}
+figure{margin:0}
+table{border-collapse:collapse}
+
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;
+  padding:0;margin:-1px;overflow:hidden;
+  clip-path:inset(50%);white-space:nowrap;border:0;
+}
+
+.wrap{
+  width:100%;
+  max-width:var(--container);
+  margin-inline:auto;
+  padding-inline:var(--pad);
+}
+
+.sect{padding-block:var(--sect)}
+.sect--rule{border-top:1px solid var(--rule)}
+
+.eyebrow{
+  font-family:var(--sans);
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin:0 0 14px;
+}
+.lead{font-size:clamp(1rem,1.2vw,1.1rem);color:var(--ink-2)}
+.small{font-size:.84rem;color:var(--ink-3);line-height:1.5}
+
+/* Заголовки намеренно разного размера и ритма */
+.t-xl{font-size:clamp(1.9rem,4.2vw,3rem)}
+.t-sm{font-size:clamp(1.3rem,2.2vw,1.7rem)}
+.t-i{font-style:italic}
+.indent{margin-left:clamp(0px,7vw,110px)}
+
+/* ---------- Кнопки: прямоугольные, без теней ---------- */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-height:48px;
+  padding:12px 22px;
+  border:1px solid var(--teal-d);
+  border-radius:2px;
+  background:transparent;
+  color:var(--teal-d);
+  font-size:.94rem;
+  font-weight:600;
+  letter-spacing:.005em;
+  text-decoration:none;
+  cursor:pointer;
+  transition:background-color .16s ease,color .16s ease,border-color .16s ease;
+}
+.btn--solid{background:var(--teal-d);color:#fff}
+.btn--solid:hover{background:#062c33;border-color:#062c33}
+.btn--ghost:hover{background:var(--teal-l)}
+.btn--s{min-height:44px;padding:10px 17px;font-size:.9rem}
+.btn--w{width:100%}
+.btn__arw{width:17px;height:17px;flex:none}
+
+/* ---------- SVG-спрайт ---------- */
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+.ico{width:18px;height:18px;flex:none;display:block}
+
+/* ==========================================================================
+   Верхняя строка и шапка
+   ========================================================================== */
+.topbar{
+  background:var(--teal-d);
+  color:#bcd4d8;
+  font-size:.78rem;
+  letter-spacing:.01em;
+}
+.topbar__row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding-block:9px;
+}
+.topbar__set{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.topbar a{color:#e4f0f2;text-decoration:none}
+.topbar a:hover{text-decoration:underline}
+.topbar__addr{color:#8fb4bb}
+
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:60;
+  background:rgba(251,250,246,.94);
+  backdrop-filter:saturate(140%) blur(9px);
+  border-bottom:1px solid var(--rule);
+}
+.header__row{
+  display:flex;
+  align-items:center;
+  gap:clamp(14px,2.4vw,34px);
+  min-height:var(--header-h);
+}
+.brand{
+  display:block;
+  margin-right:auto;
+  text-decoration:none;
+  line-height:1.1;
+}
+.brand__name{
+  display:block;
+  font-family:var(--serif);
+  font-size:1.32rem;
+  color:var(--ink);
+  letter-spacing:-.01em;
+}
+.brand__sub{
+  display:block;
+  font-family:var(--mono);
+  font-size:.66rem;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-top:3px;
+}
+
+.nav__list{display:flex;gap:4px}
+.nav__link{
+  display:block;
+  padding:9px 11px;
+  color:var(--ink-2);
+  font-size:.92rem;
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+}
+.nav__link:hover{color:var(--teal-d);border-bottom-color:var(--teal)}
+.nav__cta{display:none}
+
+.header__side{display:flex;align-items:center;gap:16px}
+.header__phone{
+  font-family:var(--mono);
+  font-size:.86rem;
+  color:var(--ink);
+  text-decoration:none;
+  white-space:nowrap;
+}
+.header__phone:hover{color:var(--teal)}
+
+.burger{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  width:46px;height:46px;
+  border:1px solid var(--rule);
+  border-radius:2px;
+  background:var(--white);
+  color:var(--ink);
+  cursor:pointer;
+}
+.burger__b{position:relative;width:20px;height:2px;background:currentColor}
+.burger__b::before,
+.burger__b::after{
+  content:"";position:absolute;left:0;
+  width:20px;height:2px;background:currentColor;
+  transition:transform .18s ease,top .18s ease;
+}
+.burger__b::before{top:-6px}
+.burger__b::after{top:6px}
+.site-header.is-open .burger__b{background:transparent}
+.site-header.is-open .burger__b::before{top:0;transform:rotate(45deg)}
+.site-header.is-open .burger__b::after{top:0;transform:rotate(-45deg)}
+
+/* ==========================================================================
+   Первый экран: 1.55fr / 1, крупная цифра выходит за контейнер
+   ========================================================================== */
+.intro{
+  overflow:hidden;
+  padding-block:clamp(38px,5.5vw,80px) clamp(34px,5vw,72px);
+  border-bottom:1px solid var(--rule);
+}
+.intro__grid{
+  display:grid;
+  grid-template-columns:1.55fr 1fr;
+  gap:clamp(28px,4.5vw,64px);
+  align-items:start;
+}
+.intro h1{max-width:15ch;margin-bottom:.4em}
+.intro__lead{max-width:46ch;margin-bottom:1.7em}
+.intro__acts{display:flex;flex-wrap:wrap;gap:12px}
+.intro__when{
+  margin-top:20px;
+  font-family:var(--mono);
+  font-size:.8rem;
+  color:var(--teal);
+  letter-spacing:.01em;
+}
+
+.ledger{
+  display:grid;
+  grid-template-columns:1.5fr 1fr .7fr 1fr;
+  gap:clamp(16px,2.6vw,40px);
+  align-items:end;
+  margin-top:clamp(36px,5vw,66px);
+  padding-top:26px;
+  border-top:1px solid var(--rule);
+}
+.ledger__year{
+  font-family:var(--serif);
+  font-size:clamp(3.2rem,9.5vw,6.4rem);
+  line-height:.82;
+  letter-spacing:-.035em;
+  color:var(--teal-d);
+  margin:0 0 10px;
+}
+.ledger__item--year{transform:translateX(clamp(-140px,-8vw,0px))}
+.ledger__num{
+  font-family:var(--mono);
+  font-size:clamp(1.1rem,1.9vw,1.45rem);
+  color:var(--ink);
+  margin:0 0 6px;
+}
+.ledger__cap{margin:0;font-size:.79rem;line-height:1.42;color:var(--ink-3);max-width:29ch}
+
+/* ---------- Заглушка вместо фото: кропмарки + номер ---------- */
+.ph__frame{
+  position:relative;
+  display:grid;
+  place-items:center;
+  background:var(--paper-2);
+  border:1px solid var(--rule);
+  overflow:hidden;
+}
+.ph__frame--45{aspect-ratio:4/5}
+.ph__frame--11{aspect-ratio:1}
+.ph__frame--32{aspect-ratio:3/2}
+.ph__frame--169{aspect-ratio:16/9}
+.ph__frame img{width:100%;height:100%;object-fit:cover}
+.ph__frame::before{
+  content:"";
+  position:absolute;
+  inset:11px;
+  pointer-events:none;
+  opacity:.5;
+  background-repeat:no-repeat;
+  background-size:14px 1px,1px 14px,14px 1px,1px 14px,14px 1px,1px 14px,14px 1px,1px 14px;
+  background-position:left top,left top,right top,right top,left bottom,left bottom,right bottom,right bottom;
+  background-image:
+    linear-gradient(var(--teal-d),var(--teal-d)),linear-gradient(var(--teal-d),var(--teal-d)),
+    linear-gradient(var(--teal-d),var(--teal-d)),linear-gradient(var(--teal-d),var(--teal-d)),
+    linear-gradient(var(--teal-d),var(--teal-d)),linear-gradient(var(--teal-d),var(--teal-d)),
+    linear-gradient(var(--teal-d),var(--teal-d)),linear-gradient(var(--teal-d),var(--teal-d));
+}
+.ph__num{
+  font-family:var(--mono);
+  font-size:clamp(1.4rem,3.4vw,2.2rem);
+  letter-spacing:.16em;
+  color:var(--teal);
+}
+.ph__cap{
+  margin-top:10px;
+  font-size:.81rem;
+  line-height:1.5;
+  color:var(--ink-3);
+  max-width:42ch;
+}
+
+/* ==========================================================================
+   С чем приходят
+   ========================================================================== */
+.why{
+  display:grid;
+  grid-template-columns:1fr 1.9fr;
+  gap:clamp(26px,4vw,72px);
+  align-items:start;
+}
+.why__side{position:sticky;top:calc(var(--header-h) + 26px)}
+.why__note{
+  margin-top:22px;
+  padding-top:18px;
+  border-top:1px solid var(--rule);
+}
+.why__list{counter-reset:none}
+.why__row{
+  display:grid;
+  grid-template-columns:52px 1fr;
+  gap:clamp(14px,2vw,26px);
+  padding-block:clamp(20px,2.6vw,30px);
+  border-top:1px solid var(--rule);
+}
+.why__row:last-child{border-bottom:1px solid var(--rule)}
+.why__idx{
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--ink-3);
+  padding-top:6px;
+  letter-spacing:.06em;
+}
+.why__says{
+  font-family:var(--serif);
+  font-size:clamp(1.06rem,1.7vw,1.3rem);
+  color:var(--ink);
+  margin:0 0 .45em;
+  line-height:1.3;
+}
+.why__row p{margin:0;font-size:.94rem}
+
+/* ==========================================================================
+   Прайс таблицей
+   ========================================================================== */
+.price-head{
+  display:grid;
+  grid-template-columns:1fr 1.5fr;
+  gap:clamp(22px,4vw,64px);
+  align-items:end;
+}
+.callout{
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+  margin-block:clamp(26px,3.6vw,42px);
+  padding:20px 22px;
+  background:var(--teal-l);
+  border-left:3px solid var(--teal);
+}
+.callout__t{
+  font-family:var(--serif);
+  font-size:1.08rem;
+  color:var(--ink);
+  margin:0 0 4px;
+}
+.callout p{margin:0;font-size:.92rem;color:var(--ink-2)}
+.callout__n{
+  font-family:var(--mono);
+  font-size:.95rem;
+  color:var(--teal-d);
+  white-space:nowrap;
+  padding-top:2px;
+}
+
+.price{width:100%;font-size:.94rem}
+.price thead th{
+  text-align:left;
+  font-family:var(--sans);
+  font-size:.69rem;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  padding:0 18px 12px 0;
+  border-bottom:1px solid var(--ink);
+}
+.price thead th:last-child{text-align:right;padding-right:0}
+.price tbody tr{border-top:1px solid var(--rule)}
+.price tbody th{
+  width:27%;
+  text-align:left;
+  vertical-align:top;
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:1.05rem;
+  line-height:1.3;
+  color:var(--ink);
+  padding:19px 18px 19px 0;
+}
+.price tbody td{
+  vertical-align:top;
+  padding:19px 18px 19px 0;
+  color:var(--ink-2);
+}
+.price__val{
+  width:15%;
+  text-align:right;
+  padding-right:0 !important;
+  font-family:var(--mono);
+  font-size:.97rem;
+  color:var(--ink);
+  white-space:nowrap;
+}
+.price-foot{
+  display:grid;
+  grid-template-columns:1.35fr 1fr;
+  gap:clamp(20px,3.4vw,56px);
+  margin-top:clamp(26px,3.4vw,40px);
+}
+.price-foot p{font-size:.9rem}
+
+/* ==========================================================================
+   Врачи — ростер, а не карточки
+   ========================================================================== */
+.roster__row{
+  display:grid;
+  grid-template-columns:44px 128px minmax(190px,.95fr) 1.5fr;
+  grid-template-areas:"idx ph who text";
+  gap:clamp(16px,2.2vw,34px);
+  align-items:start;
+  padding-block:clamp(22px,3vw,34px);
+  border-top:1px solid var(--rule);
+}
+.roster__row:last-child{border-bottom:1px solid var(--rule)}
+.roster__idx{
+  grid-area:idx;
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:var(--ink-3);
+  padding-top:5px;
+}
+.roster__ph{grid-area:ph}
+.roster__who{grid-area:who}
+.roster__text{
+  grid-area:text;
+  margin:0;
+  font-size:.94rem;
+}
+.roster__role{
+  font-family:var(--mono);
+  font-size:.75rem;
+  letter-spacing:.03em;
+  color:var(--teal);
+  margin:0;
+}
+
+/* ==========================================================================
+   Первый визит: таймлайн
+   ========================================================================== */
+.visit{
+  display:grid;
+  grid-template-columns:.85fr 1.5fr;
+  gap:clamp(26px,4vw,72px);
+  align-items:start;
+}
+.visit__side{position:sticky;top:calc(var(--header-h) + 26px)}
+.visit__side .ph{margin-top:26px}
+.visit__step{
+  display:grid;
+  grid-template-columns:118px 1fr;
+  gap:clamp(16px,2.4vw,32px);
+  padding-block:clamp(20px,2.6vw,30px);
+  border-top:1px solid var(--rule);
+}
+.visit__step:last-child{border-bottom:1px solid var(--rule)}
+.visit__time{
+  font-family:var(--mono);
+  font-size:.82rem;
+  color:var(--teal-d);
+  padding-top:5px;
+  white-space:nowrap;
+}
+.visit__step p{margin:0;font-size:.94rem;max-width:56ch}
+
+/* ==========================================================================
+   Отзывы — мозаика
+   ========================================================================== */
+.reviews{
+  display:grid;
+  grid-template-columns:1.3fr 1fr;
+  gap:clamp(20px,3vw,44px);
+}
+.rv{
+  border-top:1px solid var(--rule);
+  padding-top:20px;
+}
+.rv--big{grid-row:span 2}
+.rv--wide{grid-column:1 / -1}
+.rv__q{
+  margin:0 0 16px;
+  color:var(--ink);
+  font-size:.98rem;
+}
+.rv--big .rv__q{
+  font-family:var(--serif);
+  font-size:clamp(1.15rem,2vw,1.5rem);
+  line-height:1.35;
+}
+.rv__stars{display:flex;gap:3px;margin-bottom:10px;color:var(--warm)}
+.rv__stars .ico{width:15px;height:15px}
+.rv__off{color:var(--rule)}
+.rv__by{
+  font-family:var(--mono);
+  font-size:.75rem;
+  letter-spacing:.03em;
+  color:var(--ink-3);
+  margin:0;
+}
+.rv__by b{color:var(--ink);font-weight:600}
+
+/* ==========================================================================
+   Чего мы не берёмся делать — тёмный разворот
+   ========================================================================== */
+.nolist{background:var(--teal-d);color:#bfd6da}
+.nolist h2,.nolist h3{color:#fff}
+.nolist .eyebrow{color:#7dbfca}
+.nolist__grid{
+  display:grid;
+  grid-template-columns:1fr 1.7fr;
+  gap:clamp(26px,4vw,72px);
+  align-items:start;
+}
+.nolist__grid .lead{color:#a9c6cb}
+.nolist__row{
+  display:grid;
+  grid-template-columns:44px 1fr;
+  gap:clamp(14px,2vw,24px);
+  padding-block:clamp(20px,2.6vw,28px);
+  border-top:1px solid rgba(255,255,255,.16);
+}
+.nolist__row:last-of-type{border-bottom:1px solid rgba(255,255,255,.16)}
+.nolist__idx{
+  font-family:var(--mono);
+  font-size:.78rem;
+  color:#7dbfca;
+  padding-top:5px;
+}
+.nolist__row b{
+  display:block;
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:1.1rem;
+  color:#fff;
+  margin-bottom:6px;
+  line-height:1.3;
+}
+.nolist__row p{margin:0;font-size:.93rem;color:#a9c6cb}
+.nolist__after{
+  margin-top:26px;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.02rem;
+  color:#dcebee;
+}
+
+/* ==========================================================================
+   Вопросы
+   ========================================================================== */
+.faq{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0 clamp(28px,4.5vw,64px);
+  align-content:start;
+}
+.faq details{border-top:1px solid var(--rule);padding:15px 0}
+.faq details:last-of-type{border-bottom:1px solid var(--rule)}
+.faq summary{
+  display:flex;
+  align-items:baseline;
+  gap:16px;
+  cursor:pointer;
+  list-style:none;
+  font-family:var(--serif);
+  font-size:1.02rem;
+  line-height:1.35;
+  color:var(--ink);
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"+";
+  margin-left:auto;
+  font-family:var(--mono);
+  font-size:1.05rem;
+  color:var(--teal);
+  line-height:1;
+}
+.faq details[open] summary::after{content:"−"}
+.faq summary:hover{color:var(--teal)}
+.faq__a{padding:12px 0 6px;font-size:.92rem}
+.faq__a p{margin:0}
+
+/* ==========================================================================
+   Запись и контакты
+   ========================================================================== */
+.book{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:clamp(30px,4.5vw,72px);
+  align-items:start;
+}
+.form{max-width:520px}
+.field{margin-bottom:16px}
+.field label{
+  display:block;
+  margin-bottom:7px;
+  font-size:.74rem;
+  font-weight:600;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+}
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  min-height:48px;
+  padding:12px 13px;
+  background:var(--white);
+  border:1px solid var(--rule);
+  border-radius:2px;
+  font-size:.95rem;
+  color:var(--ink);
+}
+.field textarea{min-height:96px;resize:vertical;line-height:1.55}
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  outline:none;
+  border-color:var(--teal);
+  box-shadow:0 0 0 3px rgba(18,91,104,.13);
+}
+.field__hint{display:block;margin-top:6px;font-size:.78rem;color:var(--ink-3)}
+.req{color:var(--teal)}
+.form__send{margin-top:22px}
+.form__note{margin-top:12px;font-size:.78rem;color:var(--ink-3);line-height:1.5}
+.form-status{
+  margin-top:16px;
+  padding:13px 15px;
+  border-left:3px solid var(--teal);
+  background:var(--teal-l);
+  font-size:.9rem;
+}
+.form-status[hidden]{display:none}
+.form-status--err{border-left-color:var(--warm);background:#f8f1e8}
+
+.contacts__row{
+  display:grid;
+  grid-template-columns:100px 1fr;
+  gap:clamp(12px,2vw,22px);
+  padding-block:15px;
+  border-top:1px solid var(--rule);
+}
+.contacts__row:last-of-type{border-bottom:1px solid var(--rule)}
+.contacts__k{
+  font-family:var(--mono);
+  font-size:.72rem;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  padding-top:3px;
+}
+.contacts__v{font-size:.94rem;color:var(--ink)}
+.contacts__v a{text-decoration:none}
+.contacts__v a:hover{text-decoration:underline}
+.contacts__v small{display:block;color:var(--ink-3);font-size:.83rem;margin-top:2px}
+.contacts__tel{
+  font-family:var(--mono);
+  font-size:1.05rem;
+  color:var(--ink);
+}
+
+/* ==========================================================================
+   Подвал
+   ========================================================================== */
+.site-footer{
+  background:#082e35;
+  color:#9fbcc1;
+  padding-block:clamp(38px,4.5vw,60px) 24px;
+  font-size:.88rem;
+}
+.footer__grid{
+  display:grid;
+  grid-template-columns:1.3fr 1fr 1fr;
+  gap:clamp(24px,3.4vw,52px);
+  align-items:start;
+}
+.footer__brand{
+  font-family:var(--serif);
+  font-size:1.24rem;
+  color:#fff;
+  text-decoration:none;
+  display:block;
+  margin-bottom:10px;
+}
+.footer__about{max-width:34ch;font-size:.86rem}
+.site-footer h4{
+  font-family:var(--sans);
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#7dbfca;
+  margin:0 0 14px;
+}
+.footer__links{display:grid;gap:8px}
+.footer__links a{color:#c2d9dd;text-decoration:none}
+.footer__links a:hover{color:#fff;text-decoration:underline}
+.footer__tel{
+  font-family:var(--mono);
+  font-size:1rem;
+  color:#fff;
+  text-decoration:none;
+}
+.footer__bottom{
+  margin-top:34px;
+  padding-top:20px;
+  border-top:1px solid rgba(255,255,255,.14);
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 28px;
+  justify-content:space-between;
+  font-size:.79rem;
+  color:#7fa0a6;
+}
+.footer__bottom p{margin:0}
+
+/* ==========================================================================
+   Появление секций
+   ========================================================================== */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.reveal.is-visible{opacity:1;transform:none}
+
+/* ==========================================================================
+   Адаптив
+   ========================================================================== */
+@media (max-width:1024px){
+  .nav,.header__side{display:none}
+  .burger{display:inline-flex}
+  .site-header.is-open .nav{
+    display:block;
+    position:absolute;
+    left:0;right:0;top:100%;
+    background:var(--paper);
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    padding:8px var(--pad) 22px;
+    max-height:calc(100vh - var(--header-h));
+    overflow-y:auto;
+  }
+  .site-header.is-open .nav__list{flex-direction:column;gap:0}
+  .site-header.is-open .nav__link{
+    padding:14px 2px;
+    font-size:1rem;
+    border-bottom:1px solid var(--rule-2);
+  }
+  .site-header.is-open .nav__cta{
+    display:grid;
+    gap:12px;
+    margin-top:18px;
+  }
+  .site-header.is-open .nav__cta .header__phone{font-size:.95rem;padding:4px 0}
+}
+
+@media (max-width:900px){
+  .intro__grid{grid-template-columns:1fr}
+  .intro__art{max-width:420px}
+  .ledger{grid-template-columns:1fr 1fr;align-items:start;gap:26px 20px}
+  .ledger__item--year{grid-column:1 / -1;transform:none}
+  .why{grid-template-columns:1fr}
+  .why__side{position:static}
+  .price-head{grid-template-columns:1fr;align-items:start}
+  .price-foot{grid-template-columns:1fr;gap:20px}
+  .visit{grid-template-columns:1fr}
+  .visit__side{position:static}
+  .nolist__grid{grid-template-columns:1fr}
+  .reviews{grid-template-columns:1fr}
+  .rv--big{grid-row:auto}
+  .rv--wide{grid-column:auto}
+  .faq{grid-template-columns:1fr}
+  .book{grid-template-columns:1fr}
+  .footer__grid{grid-template-columns:1fr 1fr}
+}
+
+@media (max-width:760px){
+  .topbar__addr{display:none}
+  .roster__row{
+    grid-template-columns:96px 1fr;
+    grid-template-areas:
+      "idx idx"
+      "ph who"
+      "text text";
+    gap:16px 18px;
+  }
+  .roster__idx{padding-top:0}
+  .visit__step{grid-template-columns:1fr;gap:8px}
+  .visit__time{padding-top:0}
+  .why__row,.nolist__row{grid-template-columns:36px 1fr}
+}
+
+@media (max-width:720px){
+  .price thead{display:none}
+  .price,.price tbody,.price tr,.price th,.price td{display:block;width:auto}
+  .price tbody tr{border-top:1px solid var(--rule);padding:18px 0}
+  .price tbody tr:last-child{border-bottom:1px solid var(--rule)}
+  .price tbody th{padding:0 0 8px;font-size:1.08rem}
+  .price tbody td{padding:0 0 10px}
+  .price tbody td:last-child{padding-bottom:0}
+  .price tbody td[data-l]::before{
+    content:attr(data-l);
+    display:block;
+    font-family:var(--sans);
+    font-size:.68rem;
+    font-weight:600;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--ink-3);
+    margin-bottom:3px;
+  }
+  .price__val{text-align:left;width:auto;white-space:normal}
+}
+
+@media (max-width:560px){
+  .ledger{grid-template-columns:1fr}
+  .ledger__item--year{grid-column:auto}
+  .intro__acts .btn{width:100%}
+  .contacts__row{grid-template-columns:1fr;gap:4px}
+  .contacts__k{padding-top:0}
+  .footer__grid{grid-template-columns:1fr;gap:26px}
+  .intro__art{max-width:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- SVG-спрайт: иконки рисуются линиями, переиспользуются через <use>. Внешних файлов нет. -->
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4.5 12h14M12.6 6.3l5.9 5.7-5.9 5.7"/>
+    </symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7.2 3.8l2.5.4 1 3-1.8 1.4c.8 2 2.2 3.4 4.2 4.2l1.4-1.8 3 1 .4 2.5c0 1.6-1.3 2.9-3 2.8-5.7-.5-10.6-5.4-11.1-11.1-.1-1.6 1.2-2.9 2.8-3z"/>
+    </symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+      <path d="M12 3.4l2.65 5.3 5.85.87-4.25 4.13 1 5.8L12 16.75 6.75 19.5l1-5.8L3.5 9.57l5.85-.87z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<a class="btn btn--solid" href="#symptoms" style="position:absolute;left:-9999px">Перейти к содержанию</a>
+
+<!-- ==========================================================================
+     ВЕРХНЯЯ СТРОКА — не липкая: адрес, часы, телефон
+     ЗАМЕНИТЬ: адрес, часы, телефон
+     ========================================================================== -->
+<div class="topbar">
+  <div class="wrap topbar__row">
+    <p class="topbar__addr">Москва, Большой Лёвшинский переулок, 7, стр. 2 — вход со двора</p>
+    <div class="topbar__set">
+      <span>Пн–Сб 9:00–21:00, Вс — выходной</span>
+      <a href="tel:+74950000000">+7 (495) 000-00-00</a>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     ЛИПКАЯ ШАПКА
+     ЗАМЕНИТЬ: название, пункты меню, телефон
+     ========================================================================== -->
+<header class="site-header" id="site-header">
+  <div class="wrap header__row">
+
+    <a class="brand" href="#top">
+      <span class="brand__name">Белый Ключ</span>
+      <span class="brand__sub">стоматология · Хамовники</span>
+    </a>
+
+    <nav class="nav" id="primary-nav" aria-label="Основное меню">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="#symptoms">С чем приходят</a></li>
+        <li><a class="nav__link" href="#prices">Цены</a></li>
+        <li><a class="nav__link" href="#doctors">Врачи</a></li>
+        <li><a class="nav__link" href="#reviews">Отзывы</a></li>
+        <li><a class="nav__link" href="#contacts">Контакты</a></li>
+      </ul>
+      <!-- Дубль контактов для мобильного меню -->
+      <div class="nav__cta">
+        <a class="header__phone" href="tel:+74950000000">
+          <!-- ЗАМЕНИТЬ: телефон -->
+          +7 (495) 000-00-00
+        </a>
+        <a class="btn btn--solid" href="#booking">Записаться на осмотр</a>
+      </div>
+    </nav>
+
+    <div class="header__side">
+      <a class="header__phone" href="tel:+74950000000">
+        <!-- ЗАМЕНИТЬ: телефон -->
+        +7 (495) 000-00-00
+      </a>
+      <a class="btn btn--solid btn--s" href="#booking">Записаться</a>
+    </div>
+
+    <button class="burger" id="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="primary-nav">
+      <span class="burger__b" aria-hidden="true"></span>
+    </button>
+
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ==========================================================================
+       ПЕРВЫЙ ЭКРАН — сетка 1.55fr / 1, крупная цифра выходит за контейнер влево
+       ФОТО: 01 — вход со двора
+       ========================================================================== -->
+  <section class="intro" aria-labelledby="h-start">
+    <div class="wrap">
+
+      <div class="intro__grid">
+
+        <div>
+          <p class="eyebrow">Хамовники · Большой Лёвшинский, 7</p>
+          <h1 id="h-start">Лечим зубы в Хамовниках с 2014 года</h1>
+          <p class="lead intro__lead">
+            Нас четверо, два кресла и один рентген. Записываем на конкретное время:
+            к 10:30 значит к 10:30. Первый визит — осмотр, снимок и письменный план
+            с суммой. Если план не подойдёт, вы не платите ничего.
+          </p>
+          <div class="intro__acts">
+            <a class="btn btn--solid" href="#booking">
+              Записаться на осмотр
+              <svg class="btn__arw" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"></use></svg>
+            </a>
+            <a class="btn btn--ghost" href="#prices">Посмотреть прайс</a>
+          </div>
+          <!-- ЗАМЕНИТЬ раз в неделю: свободные окна на текущую неделю -->
+          <p class="intro__when">
+            Свободно на этой неделе: вт 11:20, чт 18:40, сб 12:00.
+          </p>
+        </div>
+
+        <div class="intro__art">
+          <figure class="ph" data-photo="Вход со двора, вторая арка — вертикальный кадр 4:5, вечерний свет">
+            <div class="ph__frame ph__frame--45">
+              <!-- ФОТО: удалите номер ниже и вставьте <img src="photos/01-vhod.jpg" alt="Вход в клинику во дворе дома 7"> -->
+              <span class="ph__num" aria-hidden="true">01</span>
+            </div>
+            <figcaption class="ph__cap">
+              Вход со двора: вторая арка, дальше направо. Вывески на фасаде нет — домофон 12.
+            </figcaption>
+          </figure>
+        </div>
+
+      </div>
+
+      <!-- Асимметричная «ведомость»: четыре цифры разного веса -->
+      <div class="ledger">
+        <div class="ledger__item ledger__item--year">
+          <p class="ledger__year">2014</p>
+          <p class="ledger__cap">открылись в этом переулке и с тех пор не переезжали</p>
+        </div>
+        <div class="ledger__item">
+          <p class="ledger__num">63 мин</p>
+          <p class="ledger__cap">средняя длительность первого визита</p>
+        </div>
+        <div class="ledger__item">
+          <p class="ledger__num">4</p>
+          <p class="ledger__cap">врача в штате, приходящих нет</p>
+        </div>
+        <div class="ledger__item">
+          <p class="ledger__num">0 ₽</p>
+          <p class="ledger__cap">осмотр и снимок на первом визите</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       С ЧЕМ ПРИХОДЯТ — симптомы, а не услуги. 5 пунктов
+       ЗАМЕНИТЬ: формулировки жалоб и ответы
+       ========================================================================== -->
+  <section class="sect sect--rule" id="symptoms" aria-labelledby="h-symptoms">
+    <div class="wrap why">
+
+      <div class="why__side">
+        <p class="eyebrow">С чем приходят</p>
+        <h2 id="h-symptoms" class="t-xl">Пять жалоб, с которыми к нам приходят чаще всего</h2>
+        <p class="lead">
+          Ниже не список услуг, а то, как пациенты описывают проблему своими словами.
+        </p>
+        <p class="small why__note">
+          Если вашего случая нет — напишите в форме внизу. Ответим честно: беремся или
+          отправим к тому, кто сделает лучше.
+        </p>
+      </div>
+
+      <ol class="why__list">
+
+        <li class="why__row reveal">
+          <span class="why__idx" aria-hidden="true">01</span>
+          <div>
+            <p class="why__says">«Ноет вечером, к утру проходит»</p>
+            <p>Обычно это пульпит: нерв воспалён, но ещё живой. Делаем снимок и смотрим, можно ли его сохранить. Если можно — сохраняем, это на 6 000–9 000 ₽ дешевле удаления с имплантом.</p>
+          </div>
+        </li>
+
+        <li class="why__row reveal">
+          <span class="why__idx" aria-hidden="true">02</span>
+          <div>
+            <p class="why__says">«Кровит, когда чищу щёткой»</p>
+            <p>Почти всегда это налёт и камень по краю десны, а не «слабая эмаль». Убирается за один визит: ультразвук и Air Flow, 50 минут, 4 900 ₽. Кровить перестаёт на второй-третий день.</p>
+          </div>
+        </li>
+
+        <li class="why__row reveal">
+          <span class="why__idx" aria-hidden="true">03</span>
+          <div>
+            <p class="why__says">«Скололся край, но не болит»</p>
+            <p>Первые две-три недели скол действительно не болит, потом по трещине идёт вода и процесс уходит в корень. Чаще всего успеваем закрыть пломбой или вкладкой без каналов.</p>
+          </div>
+        </li>
+
+        <li class="why__row reveal">
+          <span class="why__idx" aria-hidden="true">04</span>
+          <div>
+            <p class="why__says">«Хочу просто провериться»</p>
+            <p>40 минут, снимок всех зубов, письменный список: что лечить в этом году, что можно спокойно отложить. На первом визите — 0 ₽, дальше осмотр стоит 1 500 ₽.</p>
+          </div>
+        </li>
+
+        <li class="why__row reveal">
+          <span class="why__idx" aria-hidden="true">05</span>
+          <div>
+            <p class="why__says">«Ребёнку 4 года, ни разу не были у стоматолога»</p>
+            <p>Обычная ситуация, пугаться нечего. Дарья Ким принимает с трёх лет: первый визит без лечения — посмотреть, посчитать зубы, покататься в кресле вверх-вниз. Если ребёнок замкнётся, второй визит тоже бесплатный.</p>
+          </div>
+        </li>
+
+      </ol>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ЦЕНЫ — таблицей, как в кабинете на стене. 5 позиций
+       ЗАМЕНИТЬ: позиции и суммы
+       ========================================================================== -->
+  <section class="sect sect--rule" id="prices" aria-labelledby="h-prices">
+    <div class="wrap">
+
+      <div class="price-head">
+        <div>
+          <p class="eyebrow">Цены</p>
+          <h2 id="h-prices" class="t-xl">Прайс на пять вещей, за которыми приходят</h2>
+        </div>
+        <p class="lead">
+          Сумма зависит от того, что видно на снимке, поэтому «от» честнее, чем точная
+          цифра в интернете. Точную стоимость называем после осмотра и фиксируем в договоре.
+        </p>
+      </div>
+
+      <div class="callout">
+        <p class="callout__n">0 ₽</p>
+        <div>
+          <p class="callout__t">Первый визит: осмотр, снимок, письменный план</p>
+          <p>План остаётся у вас, даже если вы решите нигде не лечиться. Он годен полгода — за это время ситуация обычно не меняется.</p>
+        </div>
+      </div>
+
+      <table class="price">
+        <caption class="sr-only">Стоимость основных услуг клиники «Белый Ключ»</caption>
+        <thead>
+          <tr>
+            <th scope="col">Услуга</th>
+            <th scope="col">Что входит в сумму</th>
+            <th scope="col">Цена</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Лечение кариеса, один зуб</th>
+            <td data-l="Что входит">Анестезия, коффердам, пломба из светокомпозита, шлифовка и полировка</td>
+            <td data-l="Цена" class="price__val">7 400 ₽</td>
+          </tr>
+          <tr>
+            <th scope="row">Лечение каналов, один зуб</th>
+            <td data-l="Что входит">1–3 канала, два визита, анестезия, контрольный снимок после пломбировки</td>
+            <td data-l="Цена" class="price__val">от 14 000 ₽</td>
+          </tr>
+          <tr>
+            <th scope="row">Имплантация</th>
+            <td data-l="Что входит">Имплант Straumann, операция, абатмент, коронка из циркония, два контрольных визита</td>
+            <td data-l="Цена" class="price__val">61 000 ₽</td>
+          </tr>
+          <tr>
+            <th scope="row">Брекеты или элайнеры, две челюсти</th>
+            <td data-l="Что входит">Диагностика и слепки, система, 18–24 подкрутки, ретейнеры на год</td>
+            <td data-l="Цена" class="price__val">148 000 ₽</td>
+          </tr>
+          <tr>
+            <th scope="row">Детский приём</th>
+            <td data-l="Что входит">Осмотр, чистка, при необходимости пломба на молочный зуб. Без наркоза</td>
+            <td data-l="Цена" class="price__val">3 200 ₽</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="price-foot">
+        <p>
+          Ещё две позиции, которые мы делаем реже: коронка или вкладка — от 26 000 ₽ за единицу;
+          отбеливание в кабинете — 19 500 ₽ за полтора часа. Отбеливание делаем только по показаниям,
+          почему — в разделе «Чего мы не берёмся делать».
+        </p>
+        <p class="small">
+          Цены действуют с 1 февраля 2026 года. После того как план согласован, сумма не меняется:
+          если в процессе выяснится, что нужен ещё один канал, это наша ошибка в диагностике,
+          и мы его в счёт не выставляем.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ВРАЧИ — ростер из четырёх строк разной высоты
+       ЗАМЕНИТЬ: ФИО, специализацию, стаж
+       ФОТО: 03–06 — портреты врачей, квадратные кадры
+       ========================================================================== -->
+  <section class="sect sect--rule" id="doctors" aria-labelledby="h-doctors">
+    <div class="wrap">
+
+      <div class="price-head">
+        <div>
+          <p class="eyebrow">Врачи</p>
+          <h2 id="h-doctors" class="t-xl">Четверо, все в штате</h2>
+        </div>
+        <p class="lead">
+          Никого не приглашаем «по записи из другого города». Если врач в отпуске, вас ведёт
+          тот, кто читал ваш план и видел снимки.
+        </p>
+      </div>
+
+      <div class="roster">
+
+        <article class="roster__row reveal">
+          <p class="roster__idx" aria-hidden="true">01</p>
+          <figure class="ph roster__ph" data-photo="Портрет Дарьи Ким, квадрат 1:1, светлый фон">
+            <div class="ph__frame ph__frame--11">
+              <!-- ФОТО: <img src="photos/doc-kim.jpg" alt="Дарья Ким, детский терапевт"> -->
+              <span class="ph__num" aria-hidden="true">03</span>
+            </div>
+          </figure>
+          <div class="roster__who">
+            <h3>Дарья Ким</h3>
+            <p class="roster__role">детский терапевт · 9 лет практики</p>
+          </div>
+          <p class="roster__text">
+            Принимает с трёх лет. Первый визит всегда без лечения: знакомство, счёт зубов,
+            разговор с родителем при ребёнке. Если ребёнок не готов — второй визит тоже
+            без лечения, денег за него не берём.
+          </p>
+        </article>
+
+        <article class="roster__row reveal">
+          <p class="roster__idx" aria-hidden="true">02</p>
+          <figure class="ph roster__ph" data-photo="Портрет Артёма Багдасаряна, квадрат 1:1">
+            <div class="ph__frame ph__frame--11">
+              <!-- ФОТО: <img src="photos/doc-bagdasarjan.jpg" alt="Артём Багдасарян, хирург-имплантолог"> -->
+              <span class="ph__num" aria-hidden="true">04</span>
+            </div>
+          </figure>
+          <div class="roster__who">
+            <h3>Артём Багдасарян</h3>
+            <p class="roster__role">хирург-имплантолог · 14 лет</p>
+          </div>
+          <p class="roster__text">
+            Ставит импланты Straumann и Astra. Без КТ не берётся, даже если вы просите
+            «просто поставить один». Бывает, что после снимка предлагает не имплант, а мост:
+            это дешевле на 20 000–30 000 ₽ и в вашей ситуации честнее.
+          </p>
+        </article>
+
+        <article class="roster__row reveal">
+          <p class="roster__idx" aria-hidden="true">03</p>
+          <figure class="ph roster__ph" data-photo="Портрет Марии Лапиной, квадрат 1:1">
+            <div class="ph__frame ph__frame--11">
+              <!-- ФОТО: <img src="photos/doc-lapina.jpg" alt="Мария Лапина, терапевт-эндодонтист"> -->
+              <span class="ph__num" aria-hidden="true">05</span>
+            </div>
+          </figure>
+          <div class="roster__who">
+            <h3>Мария Лапина</h3>
+            <p class="roster__role">терапевт, эндодонтист · 11 лет</p>
+          </div>
+          <p class="roster__text">
+            Каналы под микроскопом, увеличение 25×. Берется за зубы, которые в двух других
+            клиниках предложили удалить: находит добавочные каналы, которые не видны на
+            обычном снимке. Из десяти таких зубов сохраняет семь.
+          </p>
+        </article>
+
+        <article class="roster__row reveal">
+          <p class="roster__idx" aria-hidden="true">04</p>
+          <figure class="ph roster__ph" data-photo="Портрет Сергея Дёмина, квадрат 1:1">
+            <div class="ph__frame ph__frame--11">
+              <!-- ФОТО: <img src="photos/doc-demin.jpg" alt="Сергей Дёмин, ортодонт"> -->
+              <span class="ph__num" aria-hidden="true">06</span>
+            </div>
+          </figure>
+          <div class="roster__who">
+            <h3>Сергей Дёмин</h3>
+            <p class="roster__role">ортодонт · 7 лет</p>
+          </div>
+          <p class="roster__text">
+            Брекеты и элайнеры. Срок называет по снимкам, а не по прайсу: если выходит
+            22 месяца, говорит 22, а не 12. Ведёт 60–70 пациентов одновременно и предупреждает
+            об этом заранее.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ПЕРВЫЙ ВИЗИТ — таймлайн с минутами
+       ФОТО: 02 — кабинет
+       ========================================================================== -->
+  <section class="sect sect--rule" id="first-visit" aria-labelledby="h-visit">
+    <div class="wrap visit">
+
+      <div class="visit__side">
+        <p class="eyebrow">Первый визит</p>
+        <h2 id="h-visit" class="t-i">Как проходит час с небольшим</h2>
+        <p class="lead">
+          Расписание почти не меняется: мы специально оставляем время на разговор до того,
+          как вы сядете в кресло.
+        </p>
+        <figure class="ph" data-photo="Кабинет №2 с рентгеном — горизонтальный кадр 3:2, дневной свет">
+          <div class="ph__frame ph__frame--32">
+            <img src="photos/02-kabinet.jpg" width="1024" height="683" alt="Кабинет №2, где делают КТ и лечат каналы" loading="lazy" decoding="async">
+            <span class="ph__num" aria-hidden="true">02</span>
+          </div>
+          <figcaption class="ph__cap">
+            Кабинет №2: здесь делают КТ и каналы. Окно во двор, поэтому нет бликов на мониторе.
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="visit__list">
+
+        <div class="visit__step reveal">
+          <p class="visit__time">0:00–0:15</p>
+          <div>
+            <h3>Разговор, ещё не в кресле</h3>
+            <p>Что беспокоит, что уже лечили, какие лекарства принимаете постоянно. Это важнее осмотра: половина противопоказаний выясняется именно здесь.</p>
+          </div>
+        </div>
+
+        <div class="visit__step reveal">
+          <p class="visit__time">0:15–0:35</p>
+          <div>
+            <h3>Осмотр и снимок</h3>
+            <p>Кресло, снимок на визиографе или КТ, если вопрос про имплантацию. Снимок показываем на экране и объясняем, что на нём видно — вы увидите то же, что и врач.</p>
+          </div>
+        </div>
+
+        <div class="visit__step reveal">
+          <p class="visit__time">0:35–0:55</p>
+          <div>
+            <h3>План и сумма</h3>
+            <p>План в двух вариантах: что нужно сделать в этом году и что можно отложить. Печатаем на бумаге, вы забираете его с собой вместе со снимком.</p>
+          </div>
+        </div>
+
+        <div class="visit__step reveal">
+          <p class="visit__time">0:55–1:05</p>
+          <div>
+            <h3>Расписание</h3>
+            <p>Согласны — ставим в график. Обычно ближайшее окно в течение 1–3 дней, к детскому врачу — до недели: Дарья ведёт не больше шести детей в день.</p>
+          </div>
+        </div>
+
+        <div class="visit__step reveal">
+          <p class="visit__time">если</p>
+          <div>
+            <h3>Понадобился другой специалист</h3>
+            <p>Скажем сразу на первом визите, а не после третьего. Отправим к челюстно-лицевому хирургу или эндокринологу и дадим телефон конкретного врача, а не «погуглите».</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ОТЗЫВЫ — 4 штуки, один с честным минусом. Мозаика, а не три карточки
+       ЗАМЕНИТЬ: тексты на реальные отзывы
+       ========================================================================== -->
+  <section class="sect sect--rule" id="reviews" aria-labelledby="h-reviews">
+    <div class="wrap">
+
+      <div class="price-head">
+        <div>
+          <p class="eyebrow">Отзывы</p>
+          <h2 id="h-reviews" class="t-xl">Четыре отзыва, включая неудобный</h2>
+        </div>
+        <p class="lead">
+          Мы не удаляем отзывы про опоздания и затянутые сроки. Тот, что про 22 месяца
+          вместо 18, висит здесь с 2025 года.
+        </p>
+      </div>
+
+      <div class="reviews" style="margin-top:clamp(26px,3.6vw,44px)">
+
+        <article class="rv rv--big reveal">
+          <div class="rv__stars" role="img" aria-label="Оценка 5 из 5">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </div>
+          <blockquote class="rv__q">
+            Ставила имплант в марте. Операция — 50 минут, вышла сама, поехала домой на такси.
+            Через три дня ела с левой стороны, через неделю — как обычно. Минус один, и он
+            неприятный: в день операции просидела в холле 25 минут сверх записи, ждала хирурга
+            с предыдущего приёма.
+          </blockquote>
+          <p class="rv__by"><b>Елена</b> · 34 года · имплантация, март 2025</p>
+        </article>
+
+        <article class="rv reveal">
+          <div class="rv__stars" role="img" aria-label="Оценка 5 из 5">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </div>
+          <blockquote class="rv__q">
+            Пятый зуб предлагали удалить в двух клиниках. Мария Лапина нашла под микроскопом
+            четвёртый канал, которого до неё не видели. Два визита, 16 800 ₽ — зуб второй год на месте.
+          </blockquote>
+          <p class="rv__by"><b>Игорь</b> · 41 год · лечение каналов, ноябрь 2024</p>
+        </article>
+
+        <article class="rv reveal">
+          <div class="rv__stars" role="img" aria-label="Оценка 4 из 5">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico rv__off" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </div>
+          <blockquote class="rv__q">
+            Носила брекеты 22 месяца вместо обещанных 18. Сергей честно сказал на старте, что
+            по снимкам выйдет 20–24, но всё равно было обидно. Результат хороший, ретейнеры
+            ношу по ночам.
+          </blockquote>
+          <p class="rv__by"><b>Аня</b> · 29 лет · брекеты, 2023–2025</p>
+        </article>
+
+        <article class="rv rv--wide reveal">
+          <div class="rv__stars" role="img" aria-label="Оценка 5 из 5">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </div>
+          <blockquote class="rv__q">
+            Пришла за одним зубом, а в плане оказалось пять. План отдали с собой на бумаге,
+            никто не давил и не уговаривал «сделать всё сразу, пока действует скидка».
+            Половину вылечила в январе, половину отложила на осень — так и записано в плане.
+          </blockquote>
+          <p class="rv__by"><b>Наталья</b> · 52 года · лечение и план, январь 2026</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ЧЕГО МЫ НЕ БЕРЁМСЯ ДЕЛАТЬ — 5 пунктов. Тёмный разворот
+       ЗАМЕНИТЬ: список ограничений под свою клинику
+       ========================================================================== -->
+  <section class="sect nolist" id="no-list" aria-labelledby="h-nolist">
+    <div class="wrap nolist__grid">
+
+      <div>
+        <p class="eyebrow">Честно</p>
+        <h2 id="h-nolist" class="t-xl">Чего мы не берёмся делать</h2>
+        <p class="lead">
+          Список короткий и настоящий. Если вы попали в один из пунктов — это не отказ
+          навсегда, чаще всего это «сначала к другому врачу, потом к нам».
+        </p>
+      </div>
+
+      <div>
+        <div class="nolist__row reveal">
+          <span class="nolist__idx" aria-hidden="true">01</span>
+          <div>
+            <b>Не ставим импланты без КТ</b>
+            <p>Аргумент «у меня есть снимок из интернета, посмотрите» не принимаем. По нему нельзя оценить толщину кости, а ошибка стоит вам 61 000 ₽ и повторной операции.</p>
+          </div>
+        </div>
+
+        <div class="nolist__row reveal">
+          <span class="nolist__idx" aria-hidden="true">02</span>
+          <div>
+            <b>Не принимаем детей до трёх лет и не трогаем зубы мудрости у подростков до 16</b>
+            <p>Это к челюстно-лицевому хирургу — у нас нет такой лицензии и нет стационара. Дадим телефон того, к кому сами отправляем своих пациентов.</p>
+          </div>
+        </div>
+
+        <div class="nolist__row reveal">
+          <span class="nolist__idx" aria-hidden="true">03</span>
+          <div>
+            <b>Не отбеливаем, если есть оголённые шейки или трещины эмали</b>
+            <p>Получите полосы и чувствительность на год. Сначала лечение или ремотерапия, отбеливание — через месяц после них. Половине желающих мы в отбеливании отказываем.</p>
+          </div>
+        </div>
+
+        <div class="nolist__row reveal">
+          <span class="nolist__idx" aria-hidden="true">04</span>
+          <div>
+            <b>Не берём без заключения лечащего врача при диабете в декомпенсации и на антикоагулянтах</b>
+            <p>Не потому что «сложный пациент», а потому что кровотечение и заживление в этих случаях непредсказуемы. Подскажем, какие анализы попросить у эндокринолога.</p>
+          </div>
+        </div>
+
+        <div class="nolist__row reveal">
+          <span class="nolist__idx" aria-hidden="true">05</span>
+          <div>
+            <b>Не обещаем «навсегда»</b>
+            <p>Гарантия: 5 лет на имплант, 2 года на пломбу и коронку. Действует при одном условии — гигиена раз в полгода у нас или в другом месте с выпиской. Не делаете гигиену — гарантии нет, и мы говорим это до лечения, а не после.</p>
+          </div>
+        </div>
+
+        <p class="nolist__after">
+          Если вам отказали по одному из пунктов — переспросите, что нужно принести или сдать,
+          чтобы мы вернулись к разговору. В девяти случаях из десяти это решается за две недели.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ВОПРОСЫ — 7 штук в две колонки
+       ЗАМЕНИТЬ: вопросы и ответы
+       ========================================================================== -->
+  <section class="sect sect--rule" id="faq" aria-labelledby="h-faq">
+    <div class="wrap">
+
+      <div class="price-head" style="margin-bottom:clamp(26px,3.6vw,44px)">
+        <div>
+          <p class="eyebrow">Вопросы</p>
+          <h2 id="h-faq" class="t-sm">Спрашивают почти на каждом приёме</h2>
+        </div>
+        <p class="lead">Ниже — ответы теми же словами, что и в кабинете. Без «индивидуального подхода».</p>
+      </div>
+
+      <div class="faq">
+
+        <details>
+          <summary>Сколько ждать записи?</summary>
+          <div class="faq__a"><p>Обычно 1–3 дня. К детскому врачу — до недели: Дарья ведёт не больше шести детей в день, больше в график не ставит. Экстренные случаи с острой болью стараемся принять в тот же день до 20:00.</p></div>
+        </details>
+
+        <details>
+          <summary>Что взять на первый визит?</summary>
+          <div class="faq__a"><p>Паспорт, снимки или КТ за последний год, если они есть, и список лекарств, которые принимаете постоянно. Анализы не нужны — кроме случаев из четвёртого пункта раздела «Чего мы не берёмся делать».</p></div>
+        </details>
+
+        <details>
+          <summary>Можно в рассрочку?</summary>
+          <div class="faq__a"><p>Да, от 40 000 ₽ — 6 или 12 месяцев без процентов. Это кредит банка-партнёра, банк проверяет доход, оформляем в клинике за 20 минут. На имплантацию есть вариант без банка: 40% до операции, 30% через месяц и 30% при установке коронки.</p></div>
+        </details>
+
+        <details>
+          <summary>Почему имплант стоит 61 000 ₽, а в рекламе 27 900 ₽?</summary>
+          <div class="faq__a"><p>27 900 ₽ — это цена самого титанового винта. Операция, абатмент и коронка считаются отдельно, и в сумме выходит 70 000–85 000 ₽. У нас 61 000 ₽ за всё перечисленное, и сумма фиксируется в договоре до операции.</p></div>
+        </details>
+
+        <details>
+          <summary>Делаете наркоз?</summary>
+          <div class="faq__a"><p>Общий наркоз — нет: для него нужен анестезиолог-реаниматолог и отдельная лицензия, у нас её нет. Делаем местную анестезию и седацию закисью азота — детям с четырёх лет и взрослым, которые боятся кресла. Седация стоит 4 500 ₽ и в прайс выше не входит.</p></div>
+        </details>
+
+        <details>
+          <summary>Что будет, если я забуду про приём?</summary>
+          <div class="faq__a"><p>Напоминаем в мессенджере за сутки и за два часа. Если не пришли и не предупредили — удерживаем 1 000 ₽ за простой кресла. Это прописано в договоре, а не придумывается на ресепшене.</p></div>
+        </details>
+
+        <details>
+          <summary>Работаете по ОМС или ДМС?</summary>
+          <div class="faq__a"><p>По ОМС — нет, мы частная клиника и в программе не участвуем. По ДМС работаем с «Ингосстрах» и «Согласие»: перед визитом нужно позвонить в страховую и получить направление, иначе приём будет платным. Гарантийные случаи по ДМС разбираем так же, как обычные.</p></div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ЗАПИСЬ И КОНТАКТЫ
+       ========================================================================== -->
+  <section class="sect sect--rule" id="booking" aria-labelledby="h-book">
+    <div class="wrap">
+
+      <div class="price-head" style="margin-bottom:clamp(26px,3.6vw,44px)">
+        <div>
+          <p class="eyebrow">Запись</p>
+          <h2 id="h-book" class="t-xl">Оставьте телефон — назовём свободные окна</h2>
+        </div>
+        <p class="lead">
+          Перезваниваем в рабочее время, обычно в течение часа. Если оставите заявку ночью,
+          наберём утром, около 10:00.
+        </p>
+      </div>
+
+      <div class="book">
+
+        <div>
+          <!--
+            ФОРМА (демо). Реальная отправка намеренно не подключена.
+            Вариант 1 — Formspree: получите endpoint вида https://formspree.io/f/ВАШ_ID
+            и добавьте форме action="https://formspree.io/f/ВАШ_ID" method="POST",
+            затем в скрипте ниже удалите e.preventDefault() и показ демо-сообщения.
+            Вариант 2 — Telegram Bot API: получите token у @BotFather и chat_id,
+            в обработчике submit отправьте fetch("https://api.telegram.org/bot<TOKEN>/sendMessage", {...}).
+            Токен нельзя держать во фронтенде открытым — нужен промежуточный сервер.
+          -->
+          <form class="form" id="booking-form" novalidate>
+            <div class="field">
+              <label for="name">Как вас зовут <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="name" name="name" autocomplete="name" placeholder="Анна" required>
+            </div>
+
+            <div class="field">
+              <label for="phone">Телефон <span class="req" aria-hidden="true">*</span></label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
+              <span class="field__hint">Позвоним или напишем в мессенджер — как удобнее.</span>
+            </div>
+
+            <div class="field">
+              <label for="topic">С чем обращаетесь</label>
+              <select id="topic" name="topic">
+                <!-- ЗАМЕНИТЬ: варианты под клинику -->
+                <option value="check">Осмотр и план (0 ₽)</option>
+                <option value="pain">Болит зуб</option>
+                <option value="canals">Каналы</option>
+                <option value="implant">Имплантация</option>
+                <option value="ortho">Брекеты или элайнеры</option>
+                <option value="child">Ребёнок</option>
+                <option value="other">Другое</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="message">Что стоит знать заранее</label>
+              <textarea id="message" name="message" placeholder="Удобное время, аллергии, лекарства, прошлые лечения"></textarea>
+            </div>
+
+            <div class="form__send">
+              <button class="btn btn--solid btn--w" type="submit">
+                Записаться на осмотр
+                <svg class="btn__arw" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"></use></svg>
+              </button>
+              <p class="form__note">
+                Нажимая кнопку, вы соглашаетесь на обработку персональных данных.
+                <!-- ЗАМЕНИТЬ: поставьте ссылку на политику конфиденциальности -->
+              </p>
+            </div>
+
+            <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
+          </form>
+        </div>
+
+        <!-- КОНТАКТЫ — ЗАМЕНИТЬ: адрес, часы, телефон -->
+        <div id="contacts">
+          <h3 class="t-sm">Как нас найти</h3>
+
+          <div class="contacts__row">
+            <p class="contacts__k">Адрес</p>
+            <p class="contacts__v">
+              Москва, Большой Лёвшинский переулок, 7, стр. 2, 1-й этаж
+              <small>Вход со двора, вторая арка, домофон 12. Вывески на фасаде нет.</small>
+            </p>
+          </div>
+
+          <div class="contacts__row">
+            <p class="contacts__k">Метро</p>
+            <p class="contacts__v">
+              Кропоткинская — 8 минут пешком
+              <small>Парк культуры — 11 минут. Перед входом три парковочных места, дальше платная городская.</small>
+            </p>
+          </div>
+
+          <div class="contacts__row">
+            <p class="contacts__k">Часы</p>
+            <p class="contacts__v">
+              Пн–Сб, 9:00–21:00
+              <small>Воскресенье — выходной. Последняя запись за час до закрытия.</small>
+            </p>
+          </div>
+
+          <div class="contacts__row">
+            <p class="contacts__k">Телефон</p>
+            <p class="contacts__v">
+              <!-- ЗАМЕНИТЬ: телефон -->
+              <a class="contacts__tel" href="tel:+74950000000">+7 (495) 000-00-00</a>
+              <small>Почта: <a href="mailto:hello@example.ru">hello@example.ru</a></small>
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     ПОДВАЛ
+     ========================================================================== -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer__grid">
+
+      <div>
+        <a class="footer__brand" href="#top">Белый Ключ</a>
+        <p class="footer__about">
+          Небольшая стоматология в Хамовниках: четыре врача, два кресла, рентген.
+          Работаем с 2014 года.
+        </p>
+      </div>
+
+      <div>
+        <h4>Разделы</h4>
+        <nav class="footer__links" aria-label="Меню в подвале">
+          <a href="#symptoms">С чем приходят</a>
+          <a href="#prices">Цены</a>
+          <a href="#doctors">Врачи</a>
+          <a href="#first-visit">Первый визит</a>
+          <a href="#reviews">Отзывы</a>
+          <a href="#no-list">Чего мы не делаем</a>
+          <a href="#faq">Вопросы</a>
+          <a href="#booking">Запись</a>
+        </nav>
+      </div>
+
+      <div>
+        <h4>Контакты</h4>
+        <!-- ЗАМЕНИТЬ: телефон и адрес -->
+        <p><a class="footer__tel" href="tel:+74950000000">+7 (495) 000-00-00</a></p>
+        <p>Большой Лёвшинский переулок, 7, стр. 2</p>
+        <p>Пн–Сб 9:00–21:00, Вс — выходной</p>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <p>© 2026 ООО «Белый Ключ». Лицензия ЛО-77-01-000000.</p>
+      <p>Демо-проект в портфолио: клиника, врачи, отзывы и цены выдуманы. Не является рекламой медицинских услуг.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- 1. Бургер-меню ---------- */
+  var header = document.getElementById("site-header");
+  var burger = document.getElementById("burger");
+  var nav = document.getElementById("primary-nav");
+
+  function closeMenu() {
+    if (!header || !burger) return;
+    header.classList.remove("is-open");
+    burger.setAttribute("aria-expanded", "false");
+    burger.setAttribute("aria-label", "Открыть меню");
+  }
+
+  function toggleMenu() {
+    if (!header || !burger) return;
+    var open = header.classList.toggle("is-open");
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    burger.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+  }
+
+  if (burger) burger.addEventListener("click", toggleMenu);
+
+  if (nav) {
+    nav.addEventListener("click", function (e) {
+      var link = e.target.closest ? e.target.closest("a[href^='#']") : null;
+      if (link) closeMenu();
+    });
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && header && header.classList.contains("is-open")) {
+      closeMenu();
+      if (burger) burger.focus();
+    }
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!header || !header.classList.contains("is-open")) return;
+    if (!header.contains(e.target)) closeMenu();
+  });
+
+  /* ---------- 2. Плавный скролл с учётом липкой шапки ---------- */
+  var supportsSmooth = "scrollBehavior" in document.documentElement.style;
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("a[href^='#']") : null;
+    if (!a) return;
+    var hash = a.getAttribute("href");
+    if (!hash || hash === "#") return;
+    var target = document.querySelector(hash);
+    if (!target) return;
+
+    e.preventDefault();
+    closeMenu();
+
+    var headerH = header ? header.getBoundingClientRect().height : 0;
+    var top = target.getBoundingClientRect().top + window.pageYOffset - headerH - 18;
+
+    window.scrollTo({
+      top: top < 0 ? 0 : top,
+      behavior: (reduceMotion || !supportsSmooth) ? "auto" : "smooth"
+    });
+
+    if (history.replaceState) history.replaceState(null, "", hash);
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  });
+
+  /* ---------- 3. Появление блоков ---------- */
+  var items = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+
+  function showAll() {
+    items.forEach(function (el) { el.classList.add("is-visible"); });
+  }
+
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    showAll();
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.1 });
+
+    items.forEach(function (el, i) {
+      el.style.transitionDelay = (i % 4) * 60 + "ms";
+      io.observe(el);
+    });
+  }
+
+  /* ---------- 4. Форма записи (демо-режим) ---------- */
+  var form = document.getElementById("booking-form");
+  var status = document.getElementById("form-status");
+
+  function setStatus(text, kind) {
+    if (!status) return;
+    status.textContent = text;
+    status.className = "form-status form-status--" + kind;
+    status.hidden = false;
+  }
+
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      /* ДЕМО: реальная отправка отключена. Для продакшена см. комментарий над формой. */
+      e.preventDefault();
+
+      var nameField = form.querySelector("#name");
+      var phoneField = form.querySelector("#phone");
+      var name = nameField ? nameField.value.trim() : "";
+      var phone = phoneField ? phoneField.value.trim() : "";
+
+      if (!name || !phone) {
+        setStatus("Нужны имя и телефон — остальное уточним при звонке.", "err");
+        (!name ? nameField : phoneField).focus();
+        return;
+      }
+
+      if (phone.replace(/\D/g, "").length < 10) {
+        setStatus("В номере не хватает цифр. Проверьте, пожалуйста.", "err");
+        phoneField.focus();
+        return;
+      }
+
+      var topicField = form.querySelector("#topic");
+      var topicText = topicField && topicField.options[topicField.selectedIndex]
+        ? topicField.options[topicField.selectedIndex].text
+        : "";
+
+      setStatus(
+        name + ", заявка принята — но только в демо-режиме: данные никуда не отправлены. " +
+        "Тема: " + topicText + ". В живой клинике администратор перезвонил бы в рабочее время " +
+        "и назвал свободные окна.",
+        "ok"
+      );
+
+      form.reset();
+    });
+  }
+})();
+</script>
+</body>
+</html>
