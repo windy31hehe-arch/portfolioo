@@ -161,7 +161,10 @@
   .cta{text-align:center}
   .cta h2{font-size:clamp(32px,4.6vw,56px);letter-spacing:-0.03em;max-width:16ch;margin:0 auto}
   .cta p{margin:20px auto 0;max-width:44ch;font-size:clamp(17px,1.8vw,19px);color:var(--ink-muted)}
-  .cta .pill{margin-top:32px;min-height:46px;padding:0 26px;font-size:15px}
+  .contacts{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:32px}
+  .contacts .pill{min-height:46px;padding:0 26px;font-size:15px}
+  .contact-mail{font-size:17px;color:var(--accent)}
+  .contact-mail:hover{color:var(--accent-hover)}
 
   /* ---------- подвал ---------- */
   footer{border-top:1px solid var(--hairline);padding:40px 0 56px}
@@ -170,6 +173,9 @@
   .foot nav{display:flex;gap:22px}
   .foot nav a{font-size:12px;color:var(--ink-muted)}
   .foot nav a:hover{color:var(--ink)}
+  .foot__contacts{display:flex;flex-wrap:wrap;gap:16px;font-size:12px}
+  .foot__contacts a{color:var(--ink-muted)}
+  .foot__contacts a:hover{color:var(--ink)}
 
   /* ---------- адаптив ---------- */
   @media (max-width:860px){
@@ -326,8 +332,10 @@
     <div class="wrap">
       <h2>Нужен такой же сайт под ваш бизнес?</h2>
       <p>Расскажите, чем занимаетесь — предложу структуру, назову срок и цену. Правки по макету входят в стоимость.</p>
-      <!-- ЗАМЕНИТЬ: ссылка на Telegram / WhatsApp / почту -->
-      <a class="pill" href="#contact">Написать мне</a>
+      <div class="contacts">
+        <a class="pill" href="tel:+79015990847">+7 901 599-08-47</a>
+        <a class="contact-mail" href="mailto:greentopr@gmail.com">greentopr@gmail.com</a>
+      </div>
     </div>
   </section>
 
@@ -336,6 +344,10 @@
 <footer>
   <div class="wrap foot">
     <p>© <span id="year">2026</span> Портфолио лендингов. Все демо-страницы вымышлены: названия, цены и отзывы — для показа структуры.</p>
+    <p class="foot__contacts">
+      <a href="tel:+79015990847">+7 901 599-08-47</a>
+      <a href="mailto:greentopr@gmail.com">greentopr@gmail.com</a>
+    </p>
     <nav aria-label="Ссылки в подвале">
       <a href="#works">Работы</a>
       <a href="#included">Что входит</a>
