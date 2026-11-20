@@ -493,6 +493,24 @@ table{border-collapse:collapse}
   padding-top:5px;
 }
 .roster__ph{grid-area:ph}
+/* Вместо портретов — монограммы: настоящие фото врачей под вымышленными
+   именами ставить нельзя. Меняется на <img> в тот же слот, когда появится
+   клиника с реальными людьми и их согласием. */
+.roster__mono{
+  grid-area:ph;
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+  background:var(--teal-l);
+  border:1px solid var(--rule);
+  border-radius:2px;
+}
+.roster__mono span{
+  font-family:var(--mono);
+  font-size:clamp(1.05rem,2.1vw,1.45rem);
+  letter-spacing:.08em;
+  color:var(--teal-d);
+}
 .roster__who{grid-area:who}
 .roster__text{
   grid-area:text;
@@ -986,7 +1004,7 @@ table{border-collapse:collapse}
 
   <!-- ==========================================================================
        ПЕРВЫЙ ЭКРАН — сетка 1.55fr / 1, крупная цифра выходит за контейнер влево
-       ФОТО: 01 — вход со двора
+       ФОТО: 01 — приём в кабинете
        ========================================================================== -->
   <section class="intro" aria-labelledby="h-start">
     <div class="wrap">
@@ -1015,13 +1033,13 @@ table{border-collapse:collapse}
         </div>
 
         <div class="intro__art">
-          <figure class="ph" data-photo="Вход со двора, вторая арка — вертикальный кадр 4:5, вечерний свет">
+          <figure class="ph" data-photo="Два врача и ассистент у кресла — вертикальный кадр 4:5">
             <div class="ph__frame ph__frame--45">
-              <!-- ФОТО: удалите номер ниже и вставьте <img src="photos/01-vhod.jpg" alt="Вход в клинику во дворе дома 7"> -->
-              <span class="ph__num" aria-hidden="true">01</span>
+              <img src="photos/01-priem.jpg" width="683" height="854" alt="Врач и ассистент принимают пациентку в кресле" fetchpriority="high">
             </div>
             <figcaption class="ph__cap">
-              Вход со двора: вторая арка, дальше направо. Вывески на фасаде нет — домофон 12.
+              Приём ведут вдвоём: врач и ассистент. Пока один работает, второй подаёт
+              инструмент и следит за временем. За домофоном — 12, вторая арка.
             </figcaption>
           </figure>
         </div>
@@ -1220,12 +1238,9 @@ table{border-collapse:collapse}
 
         <article class="roster__row reveal">
           <p class="roster__idx" aria-hidden="true">01</p>
-          <figure class="ph roster__ph" data-photo="Портрет Дарьи Ким, квадрат 1:1, светлый фон">
-            <div class="ph__frame ph__frame--11">
-              <!-- ФОТО: <img src="photos/doc-kim.jpg" alt="Дарья Ким, детский терапевт"> -->
-              <span class="ph__num" aria-hidden="true">03</span>
-            </div>
-          </figure>
+          <div class="roster__mono" aria-hidden="true">
+            <span>ДК</span>
+          </div>
           <div class="roster__who">
             <h3>Дарья Ким</h3>
             <p class="roster__role">детский терапевт · 9 лет практики</p>
@@ -1239,12 +1254,9 @@ table{border-collapse:collapse}
 
         <article class="roster__row reveal">
           <p class="roster__idx" aria-hidden="true">02</p>
-          <figure class="ph roster__ph" data-photo="Портрет Артёма Багдасаряна, квадрат 1:1">
-            <div class="ph__frame ph__frame--11">
-              <!-- ФОТО: <img src="photos/doc-bagdasarjan.jpg" alt="Артём Багдасарян, хирург-имплантолог"> -->
-              <span class="ph__num" aria-hidden="true">04</span>
-            </div>
-          </figure>
+          <div class="roster__mono" aria-hidden="true">
+            <span>АБ</span>
+          </div>
           <div class="roster__who">
             <h3>Артём Багдасарян</h3>
             <p class="roster__role">хирург-имплантолог · 14 лет</p>
@@ -1258,12 +1270,9 @@ table{border-collapse:collapse}
 
         <article class="roster__row reveal">
           <p class="roster__idx" aria-hidden="true">03</p>
-          <figure class="ph roster__ph" data-photo="Портрет Марии Лапиной, квадрат 1:1">
-            <div class="ph__frame ph__frame--11">
-              <!-- ФОТО: <img src="photos/doc-lapina.jpg" alt="Мария Лапина, терапевт-эндодонтист"> -->
-              <span class="ph__num" aria-hidden="true">05</span>
-            </div>
-          </figure>
+          <div class="roster__mono" aria-hidden="true">
+            <span>МЛ</span>
+          </div>
           <div class="roster__who">
             <h3>Мария Лапина</h3>
             <p class="roster__role">терапевт, эндодонтист · 11 лет</p>
@@ -1277,12 +1286,9 @@ table{border-collapse:collapse}
 
         <article class="roster__row reveal">
           <p class="roster__idx" aria-hidden="true">04</p>
-          <figure class="ph roster__ph" data-photo="Портрет Сергея Дёмина, квадрат 1:1">
-            <div class="ph__frame ph__frame--11">
-              <!-- ФОТО: <img src="photos/doc-demin.jpg" alt="Сергей Дёмин, ортодонт"> -->
-              <span class="ph__num" aria-hidden="true">06</span>
-            </div>
-          </figure>
+          <div class="roster__mono" aria-hidden="true">
+            <span>СД</span>
+          </div>
           <div class="roster__who">
             <h3>Сергей Дёмин</h3>
             <p class="roster__role">ортодонт · 7 лет</p>
@@ -1312,13 +1318,13 @@ table{border-collapse:collapse}
           Расписание почти не меняется: мы специально оставляем время на разговор до того,
           как вы сядете в кресло.
         </p>
-        <figure class="ph" data-photo="Кабинет №2 с рентгеном — горизонтальный кадр 3:2, дневной свет">
+        <figure class="ph" data-photo="Кабинет №2 — горизонтальный кадр 3:2">
           <div class="ph__frame ph__frame--32">
-            <img src="photos/02-kabinet.jpg" width="1024" height="683" alt="Кабинет №2, где делают КТ и лечат каналы" loading="lazy" decoding="async">
-            <span class="ph__num" aria-hidden="true">02</span>
+            <img src="photos/02-kabinet.jpg" width="1024" height="683" alt="Кабинет №2: кресло, стоматологическая установка, шкафы с инструментом" loading="lazy" decoding="async">
           </div>
           <figcaption class="ph__cap">
-            Кабинет №2: здесь делают КТ и каналы. Окно во двор, поэтому нет бликов на мониторе.
+            Кабинет №2. Кресло, установка, шкафы с инструментом. Между пациентами кабинет
+            разбирают и обрабатывают — поэтому он всегда в таком виде.
           </figcaption>
         </figure>
       </div>

@@ -1,0 +1,18 @@
+[
+  {
+    "file": "01-priem.jpg",
+    "size": "683x854",
+    "kb": 88,
+    "note": "два врача и ассистент у кресла",
+    "source": "atwork2-01.jpg",
+    "license": "see _assets_src/*/meta.json"
+  },
+  {
+    "file": "02-kabinet.jpg",
+    "size": "1024x683",
+    "kb": 88,
+    "note": "кабинет: кресло, установка, шкафы",
+    "source": "interior-01.jpg",
+    "license": "see _assets_src/*/meta.json"
+  }
+]

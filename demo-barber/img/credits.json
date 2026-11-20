@@ -1,0 +1,18 @@
+[
+  {
+    "file": "hall-01.jpg",
+    "size": "486x648",
+    "kb": 58,
+    "note": "мойки, зеркала и полки вдоль стены",
+    "source": "hall-07.jpg",
+    "license": "see _assets_src/*/meta.json"
+  },
+  {
+    "file": "hands-01.jpg",
+    "size": "689x861",
+    "kb": 61,
+    "note": "руки мастера: ножницы и расчёска",
+    "source": "hands-04.jpg",
+    "license": "see _assets_src/*/meta.json"
+  }
+]
