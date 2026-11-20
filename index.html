@@ -3,246 +3,344 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230066cc'/%3E%3Cpath d='M9 21h14' stroke='%23ffffff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>Портфолио — лендинги под ключ</title>
-<meta name="description" content="Портфолио: одностраничные сайты для бизнеса. Адаптивная вёрстка, живые демо, срок 2–4 дня.">
+<meta name="description" content="Одностраничные сайты для бизнеса: адаптив под мобильные, форма заявки, срок 2–4 дня. Три живых демо в разных нишах.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Портфолио — лендинги под ключ">
-<meta property="og:description" content="Три демо-лендинга: ремонт квартир, стоматология, барбершоп.">
+<meta property="og:description" content="Три живых демо: ремонт квартир, стоматология, барбершоп.">
 <style>
   :root{
-    --bg:#0b0f19;
-    --panel:#131a29;
-    --line:rgba(255,255,255,.10);
-    --text:#e8edf7;
-    --muted:#94a3b8;
-    --accent:#5b8def;
-    --accent-2:#22d3ee;
-    --r:16px;
+    --canvas:#ffffff;
+    --canvas-alt:#f5f5f7;
+    --ink:#1d1d1f;
+    --ink-muted:#6e6e73;
+    --ink-subtle:#86868b;
+    --hairline:#d2d2d7;
+    --accent:#0066cc;
+    --accent-hover:#0071e3;
+    --card-shadow:0 4px 24px rgba(0,0,0,.08);
+    --radius:12px;
+    --radius-lg:18px;
+    --display:-apple-system,"SF Pro Display","Inter","Segoe UI",system-ui,sans-serif;
+    --pad:clamp(20px,5vw,40px);
+    --max:1080px;
   }
   *,*::before,*::after{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   body{
-    margin:0;background:var(--bg);color:var(--text);line-height:1.6;
-    font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    margin:0;background:var(--canvas);color:var(--ink);
+    font-family:var(--display);font-size:17px;line-height:1.5;
     -webkit-font-smoothing:antialiased;
   }
+  img{display:block;max-width:100%;height:auto}
   a{color:inherit;text-decoration:none}
-  h1,h2,h3{margin:0;line-height:1.2;letter-spacing:-.02em}
+  h1,h2,h3{margin:0;letter-spacing:-0.02em;font-weight:500;line-height:1.08}
   p{margin:0}
-  :focus-visible{outline:3px solid var(--accent-2);outline-offset:3px;border-radius:8px}
-  .wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 22px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
 
-  header.hero{
-    position:relative;overflow:hidden;padding:84px 0 64px;
-    background:
-      radial-gradient(760px 380px at 82% -10%,rgba(91,141,239,.35),transparent 60%),
-      radial-gradient(620px 340px at 4% 108%,rgba(34,211,238,.22),transparent 60%),
-      linear-gradient(180deg,#0b0f19,#0e1524);
+  .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+  .skip{
+    position:absolute;left:50%;top:0;transform:translate(-50%,-140%);z-index:100;
+    background:var(--ink);color:#fff;font-size:13px;padding:10px 18px;border-radius:0 0 10px 10px;
+    transition:transform .2s
   }
-  header.hero::after{
-    content:"";position:absolute;inset:0;pointer-events:none;opacity:.45;
-    background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
-                     linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
-    background-size:54px 54px;
-    -webkit-mask-image:linear-gradient(180deg,#000,transparent 80%);
-    mask-image:linear-gradient(180deg,#000,transparent 80%);
+  .skip:focus{transform:translate(-50%,0)}
+
+  /* ---------- навигация: одна строка ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.86);
+    backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid var(--hairline);
   }
-  header.hero .wrap{position:relative;z-index:1}
+  .nav__inner{
+    display:flex;align-items:center;gap:28px;
+    min-height:52px;max-width:var(--max);margin:0 auto;padding:0 var(--pad)
+  }
+  .brand{font-size:15px;font-weight:600;letter-spacing:-.01em}
+  .nav__links{display:flex;gap:26px;margin-left:auto}
+  .nav__links a{font-size:13px;color:var(--ink-muted);font-weight:400}
+  .nav__links a:hover{color:var(--ink)}
   .pill{
-    display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;
-    letter-spacing:.1em;text-transform:uppercase;color:var(--accent-2);
-    border:1px solid rgba(34,211,238,.35);border-radius:999px;padding:7px 15px;margin-bottom:22px
+    display:inline-flex;align-items:center;justify-content:center;
+    min-height:32px;padding:0 16px;border-radius:980px;
+    font-size:13px;font-weight:500;background:var(--ink);color:#fff;
+    transition:background .2s,color .2s,transform .12s
   }
-  h1{font-size:clamp(30px,5vw,50px);font-weight:800;max-width:20ch}
-  .hero p{margin-top:18px;color:var(--muted);font-size:clamp(15px,1.8vw,18px);max-width:62ch}
-  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
-  .btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;
-    padding:0 24px;border-radius:12px;font-weight:700;font-size:15px;border:1px solid transparent;
-    transition:transform .15s,background .2s,border-color .2s
+  .pill:hover{background:#000}
+  .pill:active{transform:translateY(1px)}
+  .pill--ghost{background:transparent;color:var(--accent);padding:0}
+  .pill--ghost:hover{color:var(--accent-hover);background:transparent}
+
+  /* ---------- первый экран ---------- */
+  .hero{padding:clamp(72px,10vw,120px) 0 0;text-align:center}
+  .hero h1{
+    font-size:clamp(42px,7.4vw,88px);
+    letter-spacing:-0.035em;line-height:1.02;
+    margin:0 auto;max-width:16ch
   }
-  .btn:active{transform:translateY(1px)}
-  .btn--primary{background:var(--accent);color:#fff;box-shadow:0 10px 26px rgba(91,141,239,.32)}
-  .btn--primary:hover{background:#4a7de0}
-  .btn--ghost{border-color:var(--line);color:var(--text);background:rgba(255,255,255,.04)}
-  .btn--ghost:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.28)}
+  .hero p{
+    margin:24px auto 0;max-width:44ch;
+    font-size:clamp(17px,2vw,21px);color:var(--ink-muted)
+  }
+  .hero__cta{display:flex;align-items:center;justify-content:center;gap:28px;margin-top:36px;flex-wrap:wrap}
+  .hero__cta .pill{min-height:44px;padding:0 24px;font-size:15px}
 
-  section{padding:64px 0}
-  .sec-head{max-width:64ch;margin-bottom:34px}
-  .sec-head h2{font-size:clamp(23px,3.2vw,32px);font-weight:800}
-  .sec-head p{margin-top:12px;color:var(--muted);font-size:15.5px}
+  /* продуктовое фото: мокап браузера на светлой панели */
+  .stage{
+    margin-top:clamp(48px,7vw,80px);
+    background:var(--canvas-alt);
+    border-radius:var(--radius-lg);
+    padding:clamp(18px,4vw,52px);
+  }
+  .shot{
+    border-radius:10px;overflow:hidden;background:#fff;
+    box-shadow:var(--card-shadow);
+    border:1px solid rgba(0,0,0,.06)
+  }
+  .shot__bar{
+    display:flex;align-items:center;gap:7px;
+    padding:10px 14px;border-bottom:1px solid #ececf0;background:#fff
+  }
+  .shot__dot{width:9px;height:9px;border-radius:50%;background:#e3e3e8}
+  .shot__url{
+    margin-left:10px;flex:1;max-width:320px;
+    font-size:11px;color:var(--ink-subtle);
+    background:var(--canvas-alt);border-radius:6px;padding:4px 10px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+  }
+  .shot img{width:100%;aspect-ratio:16/9;object-fit:cover}
 
-  .works{display:grid;grid-template-columns:repeat(auto-fit,minmax(288px,1fr));gap:22px}
+  /* ---------- секции ---------- */
+  .sec{padding:clamp(96px,12vw,140px) 0}
+  .sec--alt{background:var(--canvas-alt)}
+  .sec__head{max-width:38ch;margin-bottom:clamp(40px,6vw,64px)}
+  .sec__head h2{font-size:clamp(32px,4.4vw,56px);letter-spacing:-0.03em}
+  .sec__head p{margin-top:16px;font-size:clamp(17px,1.8vw,19px);color:var(--ink-muted)}
+  .sec--alt .sec__head{max-width:44ch}
+
+  /* ---------- работы ---------- */
   .work{
-    display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);
-    border-radius:var(--r);overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s
+    display:grid;grid-template-columns:1fr 1.15fr;
+    gap:clamp(32px,5vw,64px);align-items:center;
+    padding:clamp(40px,5vw,56px) 0;
+    border-top:1px solid var(--hairline)
   }
-  .work:hover{transform:translateY(-4px);border-color:rgba(91,141,239,.55);box-shadow:0 22px 50px rgba(0,0,0,.45)}
-  .work__cover{
-    aspect-ratio:16/10;position:relative;display:grid;place-items:center;overflow:hidden
-  }
-  .work__cover::before{
-    content:"";position:absolute;inset:0;
-    background-image:linear-gradient(rgba(255,255,255,.10) 1px,transparent 1px),
-                     linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px);
-    background-size:32px 32px
-  }
-  .work__cover b{
-    position:relative;z-index:1;font-size:12.5px;font-weight:800;letter-spacing:.14em;
-    text-transform:uppercase;color:#fff;background:rgba(0,0,0,.28);
-    border:1px solid rgba(255,255,255,.30);border-radius:999px;padding:7px 14px;backdrop-filter:blur(4px)
-  }
-  .k1{background:linear-gradient(135deg,#7c2d12,#ea6a12)}
-  .k2{background:linear-gradient(135deg,#0e7490,#22d3ee)}
-  .k3{background:linear-gradient(135deg,#1c1917,#d4a24c)}
-  .work__body{padding:22px;display:flex;flex-direction:column;flex:1}
-  .work__body h3{font-size:18px;font-weight:800}
-  .work__body p{margin-top:9px;color:var(--muted);font-size:14.5px}
-  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}
-  .tags span{
-    font-size:12px;font-weight:700;color:var(--muted);border:1px solid var(--line);
-    border-radius:999px;padding:5px 11px;background:rgba(255,255,255,.03)
+  .work:first-of-type{border-top:0;padding-top:0}
+  .work__text h3{font-size:clamp(24px,2.8vw,34px);letter-spacing:-0.02em}
+  .work__text p{margin-top:14px;font-size:17px;color:var(--ink-muted);max-width:34ch}
+  .work__tag{
+    display:inline-block;margin-top:20px;
+    font-size:12px;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--ink-subtle)
   }
   .work__link{
-    margin-top:auto;padding-top:20px;display:flex;align-items:center;gap:8px;
-    font-weight:800;font-size:14.5px;color:var(--accent-2)
+    display:inline-flex;align-items:center;gap:7px;margin-top:22px;
+    font-size:17px;color:var(--accent)
   }
+  .work__link:hover{color:var(--accent-hover)}
   .work__link svg{transition:transform .2s}
-  .work:hover .work__link svg{transform:translateX(4px)}
-
-  .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
-  .skill{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px}
-  .skill h3{font-size:16.5px;font-weight:800;margin-bottom:9px}
-  .skill p{color:var(--muted);font-size:14.5px}
-
-  .cta{
-    background:linear-gradient(160deg,#131a29,#0e1524);border:1px solid var(--line);
-    border-radius:20px;padding:38px;text-align:center
+  .work__link:hover svg{transform:translateX(3px)}
+  .work__media{
+    background:var(--canvas-alt);border-radius:var(--radius-lg);
+    padding:clamp(14px,2.5vw,28px)
   }
-  .cta h2{font-size:clamp(22px,3vw,30px);font-weight:800}
-  .cta p{margin-top:12px;color:var(--muted);max-width:58ch;margin-left:auto;margin-right:auto}
-  .cta .hero-actions{justify-content:center}
+  .sec--alt .work__media{background:#fff}
+  .work__media img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px}
+  .work--flip .work__media{order:-1}
 
-  footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--muted);font-size:14px}
-  .footer-in{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+  /* ---------- что входит ---------- */
+  .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:clamp(28px,4vw,48px)}
+  .feat h3{font-size:22px;letter-spacing:-0.01em;margin-top:16px}
+  .feat p{margin-top:8px;font-size:15px;color:var(--ink-muted)}
+  .feat svg{color:var(--ink);width:28px;height:28px}
 
+  /* ---------- финальный призыв ---------- */
+  .cta{text-align:center}
+  .cta h2{font-size:clamp(32px,4.6vw,56px);letter-spacing:-0.03em;max-width:16ch;margin:0 auto}
+  .cta p{margin:20px auto 0;max-width:44ch;font-size:clamp(17px,1.8vw,19px);color:var(--ink-muted)}
+  .cta .pill{margin-top:32px;min-height:46px;padding:0 26px;font-size:15px}
+
+  /* ---------- подвал ---------- */
+  footer{border-top:1px solid var(--hairline);padding:40px 0 56px}
+  .foot{display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-between;align-items:baseline}
+  .foot p{font-size:12px;color:var(--ink-subtle);max-width:52ch}
+  .foot nav{display:flex;gap:22px}
+  .foot nav a{font-size:12px;color:var(--ink-muted)}
+  .foot nav a:hover{color:var(--ink)}
+
+  /* ---------- адаптив ---------- */
+  @media (max-width:860px){
+    .work{grid-template-columns:1fr;gap:28px}
+    .work__media{order:-1}
+    .work--flip .work__media{order:-1}
+    .nav__links{display:none}
+    .nav__inner{gap:16px}
+    .brand{margin-right:auto}
+  }
   @media (max-width:520px){
-    header.hero{padding:60px 0 48px}
-    .cta{padding:26px}
-    .hero-actions .btn{width:100%}
+    .hero h1{font-size:clamp(34px,9vw,48px)}
+    .hero__cta{gap:18px}
   }
   @media (prefers-reduced-motion:reduce){
-    *{transition:none!important;animation:none!important}
     html{scroll-behavior:auto}
+    *{transition:none!important;animation:none!important}
   }
 </style>
 </head>
 <body>
 
-<header class="hero" id="top">
-  <div class="wrap">
-    <span class="pill">Портфолио · лендинги</span>
-    <h1>Одностраничные сайты, которые собирают заявки</h1>
-    <p>Адаптивная вёрстка под мобильные, понятная структура, форма заявки и мини-калькулятор. Ниже — три живых демо в разных нишах: откройте любую и посмотрите на телефоне.</p>
-    <div class="hero-actions">
-      <a class="btn btn--primary" href="#works">Смотреть работы</a>
-      <a class="btn btn--ghost" href="#contacts">Заказать сайт</a>
-    </div>
+<a class="skip" href="#works">Перейти к работам</a>
+
+<header class="nav">
+  <div class="nav__inner">
+    <a class="brand" href="#top">Портфолио</a>
+    <nav class="nav__links" aria-label="Основная навигация">
+      <a href="#works">Работы</a>
+      <a href="#included">Что входит</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <a class="pill" href="#contact">Написать</a>
   </div>
 </header>
 
-<section id="works">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2>Три демо-проекта</h2>
-      <p>Все страницы — один HTML-файл, открываются мгновенно и работают без интернета. Это значит: никаких тяжёлых конструкторов, быстро грузится, легко переносится на любой хостинг.</p>
-    </div>
-    <div class="works">
-      <a class="work" href="demo-remont/index.html">
-        <div class="work__cover k1"><b>Ремонт квартир</b></div>
-        <div class="work__body">
-          <h3>Артель «Скоба»</h3>
-          <p>Прайс как спецификация, объекты с метражом и сроками, калькулятор и честный блок «чего мы не делаем».</p>
-          <div class="tags"><span>Калькулятор</span><span>Фото объектов</span><span>Асимметричная сетка</span></div>
-          <div class="work__link">Открыть демо
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+<main id="top">
+
+  <!-- ---------- первый экран ---------- -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>Лендинг, который приносит заявки</h1>
+      <p>Одностраничный сайт под ваш бизнес: адаптив под телефон, форма заявки в Telegram, срок 2–4 дня.</p>
+      <div class="hero__cta">
+        <a class="pill" href="#works">Смотреть работы</a>
+        <a class="pill pill--ghost" href="#contact">Обсудить сайт →</a>
+      </div>
+
+      <div class="stage">
+        <div class="shot">
+          <div class="shot__bar" aria-hidden="true">
+            <span class="shot__dot"></span>
+            <span class="shot__dot"></span>
+            <span class="shot__dot"></span>
+            <span class="shot__url">artel-skoba.ru — ремонт квартир</span>
           </div>
+          <!-- ФОТО: скриншот реального проекта. Сейчас — кадр из демо «ремонт квартир». -->
+          <img src="demo-remont/img/hero.jpg" width="1500" height="1000"
+               alt="Фрагмент лендинга для компании по ремонту квартир" fetchpriority="high">
         </div>
-      </a>
-
-      <a class="work" href="demo-clinic/index.html">
-        <div class="work__cover k2"><b>Стоматология</b></div>
-        <div class="work__body">
-          <h3>Белый Ключ</h3>
-          <p>Жалобы вместо услуг, прайс таблицей, врачи в штате и четыре отзыва — включая неудобный.</p>
-          <div class="tags"><span>Прайс-таблица</span><span>Врачи</span><span>Серифная типографика</span></div>
-          <div class="work__link">Открыть демо
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
-          </div>
-        </div>
-      </a>
-
-      <a class="work" href="demo-barber/index.html">
-        <div class="work__cover k3"><b>Барбершоп</b></div>
-        <div class="work__body">
-          <h3>Топор</h3>
-          <p>Прайс текстом как на стене, мастера с характером, правила заведения и раздел «кого мы не стрижём».</p>
-          <div class="tags"><span>Тёмная тема</span><span>Прайс-список</span><span>Моно-акценты</span></div>
-          <div class="work__link">Открыть демо
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2>Что входит в работу</h2>
-      <p>Не «шаблон с картинками», а собранная под задачу страница.</p>
-    </div>
-    <div class="skills">
-      <div class="skill">
-        <h3>Вёрстка под мобильные</h3>
-        <p>Проверяю на 360, 768 и 1200 пикселях. Никакой горизонтальной прокрутки и налезающих блоков.</p>
-      </div>
-      <div class="skill">
-        <h3>Тексты и структура</h3>
-        <p>Раскладываю предложение по блокам: услуги, выгоды, цены, отзывы, частые вопросы, форма заявки.</p>
-      </div>
-      <div class="skill">
-        <h3>Скорость загрузки</h3>
-        <p>Один файл без тяжёлых библиотек — страница открывается за доли секунды даже на мобильном интернете.</p>
-      </div>
-      <div class="skill">
-        <h3>Подключение заявок</h3>
-        <p>Настраиваю отправку форм в почту или Telegram, чтобы заявки не терялись.</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="contacts" style="padding-top:0">
-  <div class="wrap">
-    <div class="cta">
+  <!-- ---------- работы ---------- -->
+  <section class="sec" id="works">
+    <div class="wrap">
+      <div class="sec__head">
+        <h2>Три демо в разных нишах</h2>
+        <p>Не шаблон с картинками, а страницы с разной логикой, типографикой и структурой — под задачу конкретного бизнеса.</p>
+      </div>
+
+      <article class="work">
+        <div class="work__text">
+          <h3>Ремонт квартир</h3>
+          <p>Прайс как спецификация, объекты с метражом и сроками, калькулятор стоимости и блок «чего мы не делаем».</p>
+          <span class="work__tag">Артель «Скоба» · светлая тема</span>
+          <br>
+          <a class="work__link" href="demo-remont/index.html">Открыть демо
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <div class="work__media">
+          <img src="demo-remont/img/work-1.jpg" width="1000" height="750" alt="Лендинг компании по ремонту квартир" decoding="async">
+        </div>
+      </article>
+
+      <article class="work work--flip">
+        <div class="work__text">
+          <h3>Стоматология</h3>
+          <p>Жалобы вместо списка услуг, прайс таблицей, врачи в штате и четыре отзыва — один из них неудобный.</p>
+          <span class="work__tag">«Белый Ключ» · серифная типографика</span>
+          <br>
+          <a class="work__link" href="demo-clinic/index.html">Открыть демо
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <div class="work__media">
+          <img src="demo-clinic/photos/02-kabinet.jpg" width="1024" height="683" alt="Лендинг стоматологической клиники" decoding="async">
+        </div>
+      </article>
+
+      <article class="work">
+        <div class="work__text">
+          <h3>Барбершоп</h3>
+          <p>Прайс текстом, как на стене, мастера с характером, правила заведения и раздел «кого мы не стрижём».</p>
+          <span class="work__tag">«Топор» · тёмная тема</span>
+          <br>
+          <a class="work__link" href="demo-barber/index.html">Открыть демо
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <div class="work__media">
+          <img src="demo-barber/img/hall-01.jpg" width="486" height="648" alt="Лендинг барбершопа" decoding="async">
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ---------- что входит ---------- -->
+  <section class="sec sec--alt" id="included">
+    <div class="wrap">
+      <div class="sec__head">
+        <h2>Что входит в работу</h2>
+        <p>Страница собирается под задачу, а не натягивается на готовый шаблон.</p>
+      </div>
+      <div class="feats">
+        <div class="feat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg>
+          <h3>Вёрстка под телефон</h3>
+          <p>Проверяю на 360, 768 и 1200 пикселях. Без горизонтальной прокрутки и съехавших блоков.</p>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h11"/><path d="M4 17h7"/></svg>
+          <h3>Тексты и структура</h3>
+          <p>Раскладываю предложение по блокам: услуги, выгоды, цены, отзывы, частые вопросы, форма.</p>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>
+          <h3>Скорость загрузки</h3>
+          <p>Один HTML-файл без тяжёлых библиотек. Открывается мгновенно даже на мобильном интернете.</p>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+          <h3>Заявки в Telegram</h3>
+          <p>Настраиваю отправку форм в мессенджер, чтобы обращения не терялись в почте.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- призыв ---------- -->
+  <section class="sec cta" id="contact">
+    <div class="wrap">
       <h2>Нужен такой же сайт под ваш бизнес?</h2>
-      <p>Напишите, чем занимаетесь — предложу структуру, назову срок и цену. Правки по макету входят в стоимость.</p>
-      <div class="hero-actions">
-        <!-- ЗАМЕНИТЬ: контакты. Можно поставить ссылку на Telegram / WhatsApp / почту. -->
-        <a class="btn btn--primary" href="#contacts">Написать мне</a>
-        <a class="btn btn--ghost" href="#works">Посмотреть демо ещё раз</a>
-      </div>
-      <p style="margin-top:18px;font-size:13.5px">Здесь будет ваш контакт: Telegram, WhatsApp, почта или телефон.</p>
+      <p>Расскажите, чем занимаетесь — предложу структуру, назову срок и цену. Правки по макету входят в стоимость.</p>
+      <!-- ЗАМЕНИТЬ: ссылка на Telegram / WhatsApp / почту -->
+      <a class="pill" href="#contact">Написать мне</a>
     </div>
-  </div>
-</section>
+  </section>
+
+</main>
 
 <footer>
-  <div class="wrap footer-in">
-    <span>© <span id="year">2026</span> Портфолио лендингов</span>
-    <span>Демо-страницы. Все компании, цены и отзывы вымышлены.</span>
+  <div class="wrap foot">
+    <p>© <span id="year">2026</span> Портфолио лендингов. Все демо-страницы вымышлены: названия, цены и отзывы — для показа структуры.</p>
+    <nav aria-label="Ссылки в подвале">
+      <a href="#works">Работы</a>
+      <a href="#included">Что входит</a>
+      <a href="#contact">Контакты</a>
+    </nav>
   </div>
 </footer>
 
@@ -251,6 +349,17 @@
   "use strict";
   var year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
+
+  /* якоря с учётом липкой навигации */
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (!target) return;
+      e.preventDefault();
+      var top = target.getBoundingClientRect().top + window.pageYOffset - 60;
+      window.scrollTo({ top: top, behavior: "smooth" });
+    });
+  });
 })();
 </script>
 </body>
